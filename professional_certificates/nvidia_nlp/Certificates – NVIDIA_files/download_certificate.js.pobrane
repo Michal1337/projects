@@ -1,0 +1,21 @@
+$ = jQuery;
+$(document).ready(function () {
+var today = new Date();
+const month = today.toLocaleString('default', { month: 'long' });
+let current_date = month +' '+ today.getDate() +', '+today.getFullYear();
+  $('.download_btn' ).click(function() {
+    let cert_id = $('.download_btn' ).attr('data-cert-id');
+    let mywindow = window.open('', 'PRINT', 'height=1000,width=800,top=100,visible=none');
+    mywindow.document.write(`<html><head><title>Certificate `+cert_id+` </title>
+      <link rel="stylesheet" href="`+DownloadCertificateSettings.theme_uri+`/inc/css/certificate.css">
+      <style type="text/css" media="print"> #header {visibility: visible !important;} header { display:block !important; visibility:visible !important; } @page { size:  portrait; margin:0; print-color-adjust: exact; -webkit-print-color-adjust: exact; color-adjust: exact !important; }</style>`);
+    mywindow.document.write('</head><body style=" margin-left:auto; margin-right:auto; box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px; background:#fff; width:800; margin-top:10px; -webkit-print-color-adjust: exact; ">');
+    mywindow.document.write(document.getElementById('cert-template').innerHTML);
+    // mywindow.document.write(`<div style="width:950;  display:flex; margin-top:10px;"><div>Certificate ID number: <strong>`+cert_id+` </strong></div><div style="margin-left:auto; margin-rigth:10px;"> `+current_date+`</div>`);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close();
+    mywindow.focus();
+    setTimeout(() => {mywindow.print()}, 700);
+    mywindow.onafterprint = () => mywindow.close();
+  })
+})

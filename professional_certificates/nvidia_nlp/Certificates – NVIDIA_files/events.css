@@ -1,0 +1,36 @@
+.mask.w-slider-mask.events{
+  align-items: center !important;
+  min-height: 100px;
+}
+
+.event_div{
+  margin-right: 5px;
+  margin-left: 5px;
+  background: #fff;
+  width: 268px;
+  display: inline-block;
+  padding: 12px 9px;
+  box-shadow: 0 1px 10px 0 rgb(0 0 0 / 19%);
+  text-align: left;
+}
+
+.event_name{
+  color: #333333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.event_course{
+  margin-top:2px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mask.w-slider-mask.events.tablet{
+      overflow: visible;
+      width: 268px;
+}
+
+.row.slider.events{
+  display: none;
+}

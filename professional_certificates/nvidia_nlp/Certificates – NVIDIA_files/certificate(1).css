@@ -1,0 +1,447 @@
+@media print {
+  body{
+    -webkit-print-color-adjust: exact !important; /*chrome & webkit browsers*/
+    color-adjust: exact !important; /*firefox & IE */
+  }
+}
+
+
+
+body{
+  font-family: DINPro, Notosanscjks, 'Arial';
+}
+
+.navbar_cont{
+  display: none;
+}
+
+.image {
+  display: none;
+}
+
+.image.svg{
+  display: inline !important;
+  height: 55px;
+}
+
+.cert-image{
+  display: none;
+}
+
+.cert-image.svg{
+  display: inline !important;
+  height: 44px !important;
+}
+
+.cert-navbar{
+  background: #fff;
+  height: 70px;
+}
+
+.text-block{
+  font-size: 26px;
+  font-weight: 400;
+  color: #333 !important;
+}
+
+.deco-corner-tl{
+  border-left: 20px solid #76b900 !important;
+}
+
+.deco-corner-tr {
+  border-top: 20px solid #76b900 !important;
+}
+
+.deco-corner-br{
+  border-color: transparent #76b900 #76b900 !important;
+}
+
+.deco-corner-bl{
+  border-bottom: 20px solid #76b900 !important;
+}
+
+.cet-download-cont{
+  border-color: #76b900 !important;
+}
+
+.cet-download-cont{
+  background: #FBFBFB !important;
+}
+
+.cert-container{
+  background: #eaeaea;
+}
+
+.text-block-2{
+  font-size: 12px;
+}
+
+.wgu_link.w-inline-block.download_btn{
+  color: #fff;
+  border-radius: 0;
+  background: #76b900;
+  border-color : #76b900;
+}
+
+.d_c_text{
+  color: #fff;
+}
+
+.wgu_link.w-inline-block.download_btn:hover{
+  background: #76d300 !important;
+  color: #fff !important;
+  border-color: #76d300
+}
+
+.text-block-3{
+  border-color: #76b900;
+}
+
+.cert-user-img{
+  border-color: #333;
+}
+
+.cert-light-text, .sign_name ,.text-block-2, .more-light-text{
+  color: #666;
+}
+
+.text-block-2{
+  margin-bottom: 0 !important;
+}
+
+#primary{
+  padding-top: 0;
+}
+
+.nvidia_cer_header{
+  width: 100%;
+  background: #8dc63f;
+  height: 113px;
+  display: flex;
+  background:#939598;
+
+}
+
+.header-left{
+  width: 257px;
+  background: #8dc63f;
+  -webkit-print-color-adjust: exact;
+color-adjust: exact;
+  clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+
+
+
+.header-right{
+  width: calc(100% - 257px);
+  background:#939598;
+  -webkit-print-color-adjust: exact;
+color-adjust: exact;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.certificate-title{
+  color: #fff;
+  font-weight: 400;
+  font-size: 27px;
+  position: relative;
+  left: -10px;
+}
+
+.cert-template {
+  max-width:800px;
+}
+
+
+.header-left img{
+  height: 75px;
+  position: relative;
+  left: -10px;
+}
+
+.nvidia_cer_body{
+  padding-top:122px;
+  background: #fff;
+}
+
+.cert_desc{
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.inst_name{
+  text-align: center;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 50px;
+}
+
+.nvidia_cert_line{
+  margin-top:65px;
+  width: 50%;
+  height: 1px;
+  background: #e8e8e9;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 65px;
+}
+
+.nvidia_cert_line.sign_line{
+  width: 100%;
+  margin-bottom: 30px;
+  margin-top:0;
+  height: 1px;
+  background: #e8e8e9;
+}
+
+.nvidia_cert_text{
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 32px;
+  padding-bottom: 85px;
+}
+
+.nvidia_sign_image{
+  height: 60px;
+
+}
+
+.nvidia_cer_sign{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.m_name{
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.m_title{
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 500;
+}
+
+.nvidia_cert_date{
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #78787c;
+  font-weight: 400;
+}
+
+.nvidia_cert_date{
+  margin-top:85px;
+  padding-bottom: 85px;
+}
+
+.cert_ac_text_cont{
+  padding-bottom:30px;
+}
+
+.cert-template{
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+@media screen and (max-width: 830px){
+  .cert-template{
+    margin-left: 3% !important;
+    margin-right: 3% !important;
+  }
+
+  .certificate-title{
+    font-size: 3.1vw;
+  }
+
+  .header-left{
+    width: 33vw;
+  }
+
+  .nvidia_cer_header{
+    height: 14vw;
+  }
+
+  .header-left img{
+    height: 9vw;
+  }
+
+  .header-right{
+    width: calc(100% - 33vw);
+  }
+
+  .nvidia_cer_body{
+    padding-top:15vw;
+  }
+
+  .cert_desc{
+    font-size: 2.9vw;
+    margin-bottom: 6.5vw;
+  }
+
+  .inst_name{
+    font-size: 6vw;
+    line-height: 6vw;
+  }
+
+  .nvidia_cert_line{
+    margin-top: 8vw;
+    margin-bottom: 8vw;
+  }
+
+  .nvidia_cert_text{
+    font-size: 2.9vw;
+    line-height: 3vw;
+    padding-bottom: 10vw;
+  }
+
+  .nvidia_sign_image{
+    height: 7.2vw;
+  }
+
+  .nvidia_cert_line.sign_line{
+    margin-bottom: 3.4vw;
+  }
+
+  .nvidia_cert_date{
+    padding-bottom: 10vw;
+    margin-top: 10vw
+  }
+
+  .m_name, .m_title{
+    font-size: 1.7vw;
+    line-height: 1.8vw;
+  }
+
+  .nvidia_cert_date{
+    font-size: 1.35vw;
+  }
+}
+
+.nvidia_cert_date_right a{
+  color: #78787c;
+  text-decoration: none;
+}
+
+.nvidia_cert_date_right a:hover{
+  color: #8dc63f;
+}
+
+#dli_error_first{
+  margin-bottom: 0;
+  text-align: center;
+}
+
+@font-face {
+  font-family: 'Dinpro';
+  src: url('../fonts/DINPro-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dinpro';
+  src: url('../fonts/DINPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dinpro';
+  src: url('../fonts/DINPro.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dinpro';
+  src: url('../fonts/DINPro-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-BLACK.OTF') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-BOLD.OTF') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-DEMILIGHT.OTF') format('truetype');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-LIGHT.OTF') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-MEDIUM.OTF') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-REGULAR.OTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosanscjks';
+  src: url('../fonts/NOTOSANSCJKSC-THIN.OTF') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosansmonocjks';
+  src: url('../fonts/NOTOSANSMONOCJKSC-BOLD.OTF') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Notosansmonocjks';
+  src: url('../fonts/NOTOSANSMONOCJKSC-REGULAR.OTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

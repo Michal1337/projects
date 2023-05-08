@@ -1,0 +1,54 @@
+.course-rec-3.filterdiv0.pr.f{
+  background: #fff;
+}
+.text-block-39 {
+    color: #333333;
+    font-size: 19px;
+}
+
+.text-block-35, .course-rec-3.filterdiv0.pr.f a {
+  text-decoration: none;
+    color: #333333;
+}
+
+.progress-bar{
+  background: #76d300 !important;
+}
+
+.mask.empty_programs{
+  width: 100%;
+}
+
+.right-arrow-2{
+  justify-content: flex-end;
+}
+
+.div-block-34.container{
+  grid-column-gap: 0px;
+}
+
+.programs_in_progress_tablet{
+  display: none;
+}
+
+@media screen and (max-width: 991px){
+  .programs_in_progress_desktop{
+    display: none;
+  }
+
+  .w-slider-mask{
+    overflow: visible;
+  }
+
+  .programs_in_progress_tablet{
+      display: block;
+  }
+}
+
+.line4.n{
+  background: #76d300 !important;
+}
+
+.name_title{
+  height: 100px;
+}

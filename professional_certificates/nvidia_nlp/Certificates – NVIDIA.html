@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://courses.nvidia.com/certificates/c7db31940e4d4a5296299bca9f38929e/ -->
+<html lang="en-US" data-wf-page="60b9119dd244ab22a4c90f9d" data-wf-site="" class=" w-mod-ix"><head class="at-element-marker"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>.wf-force-outline-none[tabindex="-1"]:focus{outline:none;}</style>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="profile" href="https://gmpg.org/xfn/11">
+  <link href="https://courses.nvidia.com/wp-content/themes/ibl-nvidia-wp-theme/inc/images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="https://courses.nvidia.com/wp-content/themes/ibl-nvidia-wp-theme/inc/images/favicon.png" rel="apple-touch-icon">
+  <script type="text/javascript" async="" src="./Certificates – NVIDIA_files/f.txt"></script><script type="text/javascript" async="" src="./Certificates – NVIDIA_files/insight.min.js.pobrane"></script><script type="text/javascript" async="" src="./Certificates – NVIDIA_files/insight.min.js.pobrane"></script><script async="" src="./Certificates – NVIDIA_files/fbevents.js.pobrane"></script><script type="text/javascript" async="" src="./Certificates – NVIDIA_files/6si.min.js.pobrane"></script><script type="text/javascript" async="" src="./Certificates – NVIDIA_files/munchkin.js.pobrane"></script><script src="./Certificates – NVIDIA_files/launch-4bc07f1e0b0b.min.js.pobrane"></script><script src="./Certificates – NVIDIA_files/EX03e69f1de56a4b90b5c5d117dc417614-libraryCode_source.min.js.pobrane" async=""></script><style id="at-makers-style" class="at-flicker-control">
+.mboxDefault {visibility: hidden;}
+</style><script>_satellite["_runScript1"](function(event, target, Promise) {
+var inTime=(new Date()).getTime();
+return window.inTime=inTime;
+});</script><script>_satellite["_runScript2"](function(event, target, Promise) {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+    {
+        (function () {
+
+		  if ( typeof window.CustomEvent === "function" ) return false;
+
+		  function CustomEvent ( event, params ) {
+			params = params || { bubbles: false, cancelable: false, detail: null };
+			var evt = document.createEvent( 'CustomEvent' );
+			evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+			return evt;
+		   }
+
+		  window.CustomEvent = CustomEvent;
+		})();
+      console.log('IE');
+    }else{console.log('other version');}
+});</script><script>
+/* function dtm_track
+ *   @param type -- Required. The type of call. Defaults to "view".
+ *   @param obj -- Optional. An object of data elements for mapping to a tag.
+ *
+ *   @description This function is used for tracking some event dynamically.
+ *     This is used in conjunction with a special process in direct call
+ *     rules and js object data elements.
+ *
+ *     -- The <obj> param --
+ *     All data elements passed into the <obj> param of this function should
+ *     be created in dtm as js objects named "dtm_layer.<element_name>".
+ *     Each possible item in the object should be created as a data element
+ *     and then mapped in the associated direct call rule.
+ *
+ *     -- The <type> param --
+ *     All direct call rules will have the string in the format of <type>.
+ *     So, you might have "view". In SiteCatalyst, for example, you would
+ *     put this string and then init an s.t() call because it is a "view".
+ *     
+ *     -- Debugging -- 
+ *     If you'd like to view the output of these calls as they happen, enable
+ *     the debug cookie in the console with the following:
+ *         document.cookie="dtm_debug=true";
+ *
+ *     -- Additional Info --
+ *     This code also will initialize a page with an empty dtm_layer object if
+ *     one isn't defined already. In addition, a global cloning function is
+ *     created called "dtm_clone". It will clone the following js types: string,
+ *     object, boolean, array, date, number, function. It will NOT copy anything
+ *     that has prototype methods defined. It will also not copy anything that
+ *     is cylic or recursive in nature. If done, a stack overflow error will
+ *     result. This method can be called on any variable like so:
+ *         myClonedVar = dtm_clone(myOldVar);
+ */
+
+window.dtm_clone = function(obj) {
+  if (null == obj || "object" != typeof obj)
+    return obj;
+
+  if (obj instanceof Date) {
+    var copy = new Date();
+    copy.setTime(obj.getTime());
+    return copy;
+  }
+
+  if (obj instanceof Array) {
+    var copy = [];
+    for (var i = 0, len = obj.length; i < len; i++) {
+      copy[i] = dtm_clone(obj[i]);
+    }
+    return copy;
+  }
+
+  if (obj instanceof Object) {
+    var copy = {};
+    for (var attr in obj) {
+      if (obj.hasOwnProperty(attr)) copy[attr] = dtm_clone(obj[attr]);
+    }
+    return copy;
+  }
+
+  if (typeof console != "undefined" && console.log)
+    console.log('clone: type "'+(typeof obj)+'" not supported')
+}
+ 
+window.dtm_layer = window.dtm_layer || {};
+window.dtm_track = function(type,obj) {
+  try {
+    var hasTracked = "";
+    if (typeof _satellite == "undefined") hasTracked = "NOT ";
+    if (typeof type == "undefined" || type == null || !type) type = "view";
+  
+    var temp = window.dtm_clone(window.dtm_layer);
+    window.dtm_layer = obj || {};
+  
+    if (typeof console != "undefined" && console.log
+        && typeof _satellite.readCookie('dtm_debug') != "undefined"
+        && (_satellite.readCookie('dtm_debug') == "true"
+            || _satellite.readCookie('dtm_debug') == true)) {
+      console.log("dtm " + hasTracked + "tracked '" + type + "'", obj);
+    }
+  
+    if (hasTracked != "NOT ")
+      _satellite.track(type);
+  
+    window.dtm_layer = window.dtm_clone(temp);
+    delete temp;
+  } catch (e) {
+    if(typeof console != "undefined" && console.log)
+        console.log("dtm_track error. Message: ",e.getMessage()," Passed obj: ",obj);
+  }
+  return true;
+};
+</script>
+  <title>Certificates – NVIDIA</title>
+<meta name="robots" content="max-image-preview:large">
+<link rel="dns-prefetch" href="https://d3e54v103j8qbb.cloudfront.net/">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+<link rel="dns-prefetch" href="https://use.fontawesome.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="NVIDIA » Feed" href="https://courses.nvidia.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="NVIDIA » Comments Feed" href="https://courses.nvidia.com/comments/feed/">
+<script>
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/courses.nvidia.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.9.2"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+</script><script src="./Certificates – NVIDIA_files/wp-emoji-release.min.js.pobrane" type="text/javascript" defer=""></script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="./Certificates – NVIDIA_files/style.min.css" media="all">
+<style id="global-styles-inline-css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+<link rel="stylesheet" id="events-css-css" href="./Certificates – NVIDIA_files/events.css" media="all">
+<link rel="stylesheet" id="courses-slider-css-css" href="./Certificates – NVIDIA_files/courses_slider.css" media="all">
+<link rel="stylesheet" id="common-css-css" href="./Certificates – NVIDIA_files/common.css" media="all">
+<link rel="stylesheet" id="course_cards-css" href="./Certificates – NVIDIA_files/course_cards.css" media="all">
+<link rel="stylesheet" id="popups-css" href="./Certificates – NVIDIA_files/popups.css" media="all">
+<link rel="stylesheet" id="notifications-css" href="./Certificates – NVIDIA_files/notifications.css" media="all">
+<link rel="stylesheet" id="search_section-css" href="./Certificates – NVIDIA_files/search_section.css" media="all">
+<link rel="stylesheet" id="certificate-css" href="./Certificates – NVIDIA_files/certificate.css" media="all">
+<link rel="stylesheet" id="ibl-wp-pages-plugin-css" href="./Certificates – NVIDIA_files/ibl-wp-pages-plugin-public.css" media="all">
+<link rel="stylesheet" id="fa-icons-css" href="./Certificates – NVIDIA_files/all.css" media="all">
+<link rel="stylesheet" id="normalize-css" href="./Certificates – NVIDIA_files/normalize.css" media="all">
+<link rel="stylesheet" id="webflow-css" href="./Certificates – NVIDIA_files/webflow.css" media="all">
+<link rel="stylesheet" id="nvidia-css" href="./Certificates – NVIDIA_files/nvidia.css" media="all">
+<link rel="stylesheet" id="nvidia-course-cards-css" href="./Certificates – NVIDIA_files/course_cards(1).css" media="all">
+<link rel="stylesheet" id="menu-css-css" href="./Certificates – NVIDIA_files/menu.css" media="all">
+<link rel="stylesheet" id="nvidia-featured-content-css" href="./Certificates – NVIDIA_files/featured_content.css" media="all">
+<link rel="stylesheet" id="nvidia-certificate-css" href="./Certificates – NVIDIA_files/certificate(1).css" media="all">
+<script src="./Certificates – NVIDIA_files/jquery.min.js.pobrane" id="jquery-core-js"></script>
+<script src="./Certificates – NVIDIA_files/jquery-migrate.min.js.pobrane" id="jquery-migrate-js"></script>
+<script src="./Certificates – NVIDIA_files/ibl-wp-pages-plugin-public.js.pobrane" id="ibl-wp-pages-plugin-js"></script>
+<link rel="https://api.w.org/" href="https://courses.nvidia.com/wp-json/"><link rel="alternate" type="application/json" href="https://courses.nvidia.com/wp-json/wp/v2/pages/30"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://courses.nvidia.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://courses.nvidia.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.9.2">
+<link rel="canonical" href="https://courses.nvidia.com/certificates/">
+<link rel="shortlink" href="https://courses.nvidia.com/?p=30">
+<link rel="alternate" type="application/json+oembed" href="https://courses.nvidia.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcourses.nvidia.com%2Fcertificates%2F">
+ <script type="text/javascript" async="" src="./Certificates – NVIDIA_files/munchkin.js(1).pobrane"></script><script src="./Certificates – NVIDIA_files/RC16c14460a20848aaa2d5fd4b48777a54-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RCee9fb2620b064a95917926acb8ef05e6-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC880b7c453ff04d8ba6992d7d9d9b9808-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC6211e5a9ae6d4d798231e0b96aadda81-source.min.js.pobrane" async=""></script><script type="text/javascript" async="" id="bizible-settings" data-account="nvidia" src="./Certificates – NVIDIA_files/bizible.js.pobrane"></script><script src="./Certificates – NVIDIA_files/RC794a0c4fe5384702a19f7a189bf2739d-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC833b0b2a09924b78a1bdbe5334e442f9-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC263a46d8d3a242e6b8c343e1d1587918-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC15432b8d83d8461080a82afb001fca34-source.min.js.pobrane" async=""></script><script src="./Certificates – NVIDIA_files/RC2c49bcee9f40468e9a7bb0657bfc4a93-source.min.js.pobrane" async=""></script><script type="text/javascript" async="" src="./Certificates – NVIDIA_files/js"></script><script type="text/javascript" src="./Certificates – NVIDIA_files/js"></script><script src="./Certificates – NVIDIA_files/f(1).txt"></script><script src="./Certificates – NVIDIA_files/f(2).txt"></script><script src="./Certificates – NVIDIA_files/f(3).txt"></script></head>
+
+ <body class="page-template-default page page-id-30 logged-in page-certificates">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-dark-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0 0.49803921568627"></fefuncr><fefuncg type="table" tableValues="0 0.49803921568627"></fefuncg><fefuncb type="table" tableValues="0 0.49803921568627"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0 1"></fefuncr><fefuncg type="table" tableValues="0 1"></fefuncg><fefuncb type="table" tableValues="0 1"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0.54901960784314 0.98823529411765"></fefuncr><fefuncg type="table" tableValues="0 1"></fefuncg><fefuncb type="table" tableValues="0.71764705882353 0.25490196078431"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-red"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0 1"></fefuncr><fefuncg type="table" tableValues="0 0.27843137254902"></fefuncg><fefuncb type="table" tableValues="0.5921568627451 0.27843137254902"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-midnight"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0 0"></fefuncr><fefuncg type="table" tableValues="0 0.64705882352941"></fefuncg><fefuncb type="table" tableValues="0 1"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-magenta-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0.78039215686275 1"></fefuncr><fefuncg type="table" tableValues="0 0.94901960784314"></fefuncg><fefuncb type="table" tableValues="0.35294117647059 0.47058823529412"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-green"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0.65098039215686 0.40392156862745"></fefuncr><fefuncg type="table" tableValues="0 1"></fefuncg><fefuncb type="table" tableValues="0.44705882352941 0.4"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-orange"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tableValues="0.098039215686275 1"></fefuncr><fefuncg type="table" tableValues="0 0.66274509803922"></fefuncg><fefuncb type="table" tableValues="0.84705882352941 0.41960784313725"></fefuncb><fefunca type="table" tableValues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg> <div id="page" class="site">
+     <div class="navbar_cont">
+       <div class="nav_top">
+         <a href="https://courses.nvidia.com/"><img class="n_logo" src="./Certificates – NVIDIA_files/nvidia_logo.svg" loading="lazy" alt=""></a>
+         <!-- <a href="#" class="link">ACCOUNT</a> -->
+                    <div class="menu_holder">
+                        <div class="logged_in_menu">
+             <div tabindex="0" data-w-id="3ccdd84e-3cc9-e6b8-8758-3b6db36a980a" class="arrow_down_div">
+               <div class="text-block-2dc nav-link">Michał</div>
+               <i class="fas fa-chevron-down inh"></i>
+             </div>
+             <div class="menu-options">
+
+               <div class="info">
+                 <div class="text">
+
+                   <div class="title
+                   nl"><a href="https://courses.nvidia.com/in/MGromadzki">Michał</a>
+                   <br>
+                 </div>
+
+                 <div class="email
+                 nl">michal.gromadzki.stud@pw.edu.pl               </div>
+             </div>
+           </div>
+           <a href="https://courses.nvidia.com/dashboard" class="menu_link">
+             <div class="menu-options-div">
+               <div class="text">
+               <div class="title mt">MY COURSES
+                 <br>
+               </div>
+             </div>
+           </div>
+         </a>
+         <a href="https://courses.nvidia.com/in/MGromadzki" class="menu_link">
+           <div class="menu-options-div">
+           <div class="text">
+             <div class="title mt">PROFILE
+               <br>
+             </div>
+           </div>
+         </div>
+       </a>
+
+            <a href="https://courses.nvidia.com/account" class="menu_link">
+       <div class="menu-options-div">
+         <div class="text">
+         <div class="title mt">ACCOUNT
+           <br>
+         </div>
+       </div>
+     </div>
+   </a>
+   <a href="https://learn.next.courses.nvidia.com/openid/end-session?id_token_hint=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xlYXJuLm5leHQuY291cnNlcy5udmlkaWEuY29tL29wZW5pZCIsInN1YiI6IjIxMDY1NyIsImF1ZCI6IjY2NjU5MCIsImV4cCI6MTY1MDQ2NzYxOCwiaWF0IjoxNjUwNDY3MDE4LCJhdXRoX3RpbWUiOjE2NTAzNTUzODUsImF0X2hhc2giOiI4QURXNzVHdzBuVjlaOGlndzZycVNBIn0.NceMMwv1POt3yH_5h49lkfItAWHcavcrc51SWxxVMiI&amp;post_logout_redirect_uri=https%3A%2F%2Fcourses.nvidia.com%2Fsso%2Flogout" class="menu_link">
+     <div class="menu-options-div">
+       <div class="text">
+       <div class="title mt">LOG OUT
+         <br>
+       </div>
+     </div>
+   </div>
+ </a>
+ <div class="triangle">
+</div>
+</div>
+</div>
+</div>
+
+       </div>
+       <div class="nav_bot">
+         <div class="div-block">
+           <div class="nav-brand">DEEP LEARNING INSTITUTE</div>
+           <div class="nav-option mob_hidden">
+             <a href="https://www.nvidia.com/en-us/training/online/" class="nav-link">ONLINE COURSES</a>
+           </div>
+           <div class="nav-option mob_hidden">
+             <a href="https://www.nvidia.com/en-us/training/instructor-led-workshops/" class="nav-link">INSTRUCTOR-LED WORKSHOPS</a>
+           </div>
+           <div class="nav-option hidden">
+             <a href="https://www.nvidia.com/en-us/training/educator-programs/" class="nav-link">EDUCATOR PROGRAMS</a>
+           </div>
+           <div class="nav-option hidden">
+             <a href="https://www.nvidia.com/en-us/training/enterprise-solutions/" class="nav-link">ENTERPRISE SOLUTIONS</a>
+           </div>
+         </div>
+       </div>
+     </div>
+
+	<main id="primary" class="site-main">
+
+		
+<article id="post-30" class="post-30 page type-page status-publish hentry">
+
+
+		
+  <div class="cert-navbar">
+    <div class="cert_logo">
+      <a href="https://courses.nvidia.com/" class="w-inline-block">
+        <img src="./Certificates – NVIDIA_files/nvidia_cert_logo.png" loading="lazy" alt="" class="image">
+        <img src="./Certificates – NVIDIA_files/logo.svg" style="display:none;" loading="lazy" alt="" class="image svg">
+      </a>
+    </div>
+  </div>
+
+
+  
+
+
+  <div class="cert_ack_text">
+    <div class="cert_ac_text_cont">
+    </div>
+  </div>
+
+  <div class="cert-container">
+    <div class="cert-template" id="cert-template">
+      <div class="nvidia_cer_header">
+        <div class="header-left">
+          <img src="./Certificates – NVIDIA_files/nvidia-cert-logo.png" loading="lazy" alt="" class="nvidia_cert_logo">
+        </div>
+        <div class="header-right">
+          <div class="certificate-title">
+            CERTIFICATE OF COMPETENCY          </div>
+        </div>
+      </div>
+      <div class="nvidia_cer_body">
+        <div class="cert_desc">
+          This NVIDIA DLI Certificate has been awarded to        </div>
+        <div class="inst_name">
+          Michał Gromadzki        </div>
+        <div class="nvidia_cert_line"></div>
+        <div class="nvidia_cert_text">
+          for the successful completion of <br> <strong>Building Transformer-Based Natural Language Processing Applications</strong>        </div>
+        <div class="nvidia_cer_sign">
+          <img src="./Certificates – NVIDIA_files/asset-v1_DLI+C-FX-03+V2+type@asset+block@WR_sig.png" loading="lazy" alt="" class="nvidia_sign_image">
+          <div class="nvidia_cert_line sign_line"></div>
+          <div class="m_name">
+            Will Ramey          </div>
+          <div class="m_title">
+            Senior Director, Developer Programs          </div>
+          <div class="nvidia_cert_date">
+            <div class="nvidia_cert_date_left">
+              April 19,2022            </div>
+            <div class="nvidia_cert_date_right">
+                          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-download">
+      <a href="https://courses.nvidia.com/certificates/c7db31940e4d4a5296299bca9f38929e/#" class="wgu_link w-inline-block download_btn" data-cert-id="c7db31940e4d4a5296299bca9f38929e">
+        <div class="d_c_text">Download Certificate</div>
+      </a>
+    </div>
+              <div class="linkedin_btn-3">
+            <a href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&amp;name=Building%20Transformer-Based%20Natural%20Language%20Processing%20Applications&amp;organizationName=NVIDIA&amp;issueYear=2022&amp;issueMonth=04&amp;certUrl=https://courses.nvidia.com/certificates/c7db31940e4d4a5296299bca9f38929e/&amp;certId=c7db31940e4d4a5296299bca9f38929e" target="_blank" class="link-block-9 w-inline-block">
+              <div class="link-block soc lnkd">
+                <img src="./Certificates – NVIDIA_files/linkedin.png" alt="" class="image-42"></div>
+                <div class="button social_btn lnk">Add to Profile</div>
+              </a>
+            </div>
+          
+        <div class="cert-more">
+          <div class="cert-more-cont">
+            <div class="text-block-3">More about Michał Gromadzki's accomplishment<br></div>
+            <div class="cert_more_flex">
+              <div class="cert-more-div">
+                <div class="more-flex"><img src="./Certificates – NVIDIA_files/a05a6f56b3bf844c93b8889f125733c8.png" loading="lazy" alt="" class="cert-user-img">
+                  <div>
+                    <div class="text-name">Michał Gromadzki</div>
+                    <div class="text-name bold">MGromadzki @ NVIDIA</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cert-more-div">
+                <div class="more-light-text">Certificate ID Number:</div>
+                <div class="text-bold">c7db31940e4d4a5296299bca9f38929e</div>
+              </div>
+              <div class="cert-more-div last">
+                <div class="more-light-text">Issued On:</div>
+                <div class="text-bold">April 19,2022</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      
+	<div class="entry-content">
+
+	</div><!-- .entry-content -->
+</article><!-- #post--->
+
+	</main><!-- #main -->
+
+
+<div class="site-footer-bar">
+	<div class="footer-container">
+		<div class="site-footer-flex top_f">
+			<div class="footer-col">
+				<div class="text-block-9">DLI Solutions</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/training/online/" class="footer-link">Self-Paced, Online Courses</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/training/instructor-led-workshops/" class="footer-link">Live Instructor-Led Workshops</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/training/educator-programs/" class="footer-link">Educator Programs and Teaching Kits</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/training/enterprise-solutions/" class="footer-link">Enterprise Solutions</a>
+				</div>
+			</div>
+			<div class="footer-col">
+				<div class="text-block-9">Products</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/dgx-systems/" class="footer-link">DGX Systems</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/dgx-a100/" class="footer-link">DGX A100</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/dgx-station-a100/" class="footer-link">DGX Station</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/products/egx/" class="footer-link">EGX Platform</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/data-center-gpus/" class="footer-link">Data Center GPUs</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/data-center/virtual-solutions/" class="footer-link">Virtual GPU</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/self-driving-cars/" class="footer-link">NVIDIA DRIVE</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/isaac-sdk" class="footer-link">NVIDIA Isaac</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/" class="footer-link">Jetson</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-eu/geforce/graphics-cards/30-series/" class="footer-link">GeForce RTX</a>
+				</div>
+			</div>
+
+			<div class="footer-col">
+				<div class="text-block-9">Technologies</div>
+				<div>
+					<a href="https://developer.nvidia.com/deep-learning-software" class="footer-link">CUDA-X AI</a>
+				</div>
+				<div>
+					<a href="https://ngc.nvidia.com/catalog/all" class="footer-link">NGC Catalog</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/rapids" class="footer-link">Data Analytics</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/deep-learning-software" class="footer-link">Deep Learning SDKs</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/deep-learning-frameworks" class="footer-link">Deep Learning Frameworks</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/riva" class="footer-link">Conversational AI - Riva</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/nvidia-merlin" class="footer-link">Recommender Systems</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/solutions-and-industries#industries" class="footer-link">Industry Frameworks</a>
+				</div>
+			</div>
+			<div class="footer-col last">
+				<div class="text-block-9">Resources</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/training/resources/" class="footer-link">Technical Resources</a>
+				</div>
+				<div>
+					<a href="https://developer.nvidia.com/" class="footer-link">NVIDIA Developer</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/research/" class="footer-link">NVIDIA Research</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/on-demand/" class="footer-link">GPU Technology Conference</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/about-nvidia/careers/" class="footer-link">Careers</a>
+				</div>
+				<div>
+					<a href="https://nvidianews.nvidia.com/" class="footer-link">Newsroom</a>
+				</div>
+				<div>
+					<a href="https://blogs.nvidia.com/blog/category/deep-learning/" class="footer-link">Deep Learning Blogs</a>
+				</div>
+				<div>
+					<a href="https://www.nvidia.com/en-us/on-demand/" class="footer-link">NVIDIA On-Demand</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="site-social-media-bar">
+	<div class="footer-container top_f">
+		<div class="site-footer-flex">
+			<div class="footer-social-col-25">
+				<div class="sign-up-text">SIGN UP FOR NVIDIA NEWS</div>
+			</div>
+			<div class="footer-social-col-25">
+				<a href="https://www.nvidia.com/en-us/preferences/email-signup/" target="_blank" class="button w-button">SUBSCRIBE</a>
+			</div>
+			<div class="footer-social-col-50">
+				<div class="social-right">
+					<div class="text-block-10">Follow NVIDIA</div>
+					<a href="https://www.facebook.com/NVIDIA" target="_blank" class="soc_link w-inline-block">
+						<div class="social-link first">FB</div>
+					</a>
+					<a href="https://twitter.com/nvidia" target="_blank" class="soc_link w-inline-block">
+						<div class="social-link">TW</div>
+					</a>
+					<a href="https://www.linkedin.com/showcase/nvidia-gtc/" target="_blank" class="soc_link w-inline-block">
+						<div class="social-link">IN</div>
+					</a>
+					<a href="https://www.youtube.com/user/nvidia" target="_blank" class="soc_link w-inline-block">
+						<div class="social-link">YT</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="global-footer-bar">
+	<div class="footer-container">
+		<div class="site-footer-flex">
+			<div class="footer-social-col-50 mb-66"><img src="./Certificates – NVIDIA_files/nvidia-l-b.svg" loading="lazy" alt="" class="footer-logo">
+				<div class="global-footer-flex">
+					<a href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/" target="_blank" class="global-footer-link">Privacy Policy</a>
+					<a href="https://www.nvidia.com/en-us/about-nvidia/legal-info/" target="_blank" class="global-footer-link">Legal Info</a>
+					<a href="https://www.nvidia.com/en-us/contact/" target="_blank" class="global-footer-link">Contact Us</a>
+				</div>
+				<div class="copyright-text">Copyright © 2022 NVIDIA Corporation </div>
+			</div>
+			<div class="footer-social-col-50 mb-34">
+				<div class="usa-text">USA - United States</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div><!-- #page -->
+
+<script src="./Certificates – NVIDIA_files/jquery-3.5.1.min.dc5e7f18c8.js.pobrane" id="jQuery-js"></script>
+<script src="./Certificates – NVIDIA_files/moment.min.js.pobrane" id="dp-js"></script>
+<script id="notifications-js-extra">
+var NotificationsSettings = {"theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme"};
+</script>
+<script src="./Certificates – NVIDIA_files/notifications.js.pobrane" id="notifications-js"></script>
+<script src="./Certificates – NVIDIA_files/seo.js.pobrane" id="seo-js"></script>
+<script id="catalog-v2-js-extra">
+var CatalogV2Settings = {"home_url":"https:\/\/courses.nvidia.com","theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme","lms_url":"https:\/\/learn.next.courses.nvidia.com","show_programs":"1"};
+</script>
+<script src="./Certificates – NVIDIA_files/catalog-v2.js.pobrane" id="catalog-v2-js"></script>
+<script id="courses-slider-js-js-extra">
+var CourseSliderSettings = {"home_url":"https:\/\/courses.nvidia.com","theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme","lms_url":"https:\/\/learn.next.courses.nvidia.com"};
+</script>
+<script src="./Certificates – NVIDIA_files/courses_slider.js.pobrane" id="courses-slider-js-js"></script>
+<script id="featured-content-js-extra">
+var FTSettings = {"nonce":"8aea543366","theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme","lms_url":"https:\/\/learn.next.courses.nvidia.com","home_url":"https:\/\/courses.nvidia.com"};
+var FTSettings = {"nonce":"8aea543366","theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme","lms_url":"https:\/\/learn.next.courses.nvidia.com","home_url":"https:\/\/courses.nvidia.com"};
+</script>
+<script src="./Certificates – NVIDIA_files/featured-content.js.pobrane" id="featured-content-js"></script>
+<script id="featured-programs-js-extra">
+var FPSettings = {"nonce":"8aea543366","theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme","lms_url":"https:\/\/learn.next.courses.nvidia.com","home_url":"https:\/\/courses.nvidia.com"};
+</script>
+<script src="./Certificates – NVIDIA_files/featured-programs.js.pobrane" id="featured-programs-js"></script>
+<script src="./Certificates – NVIDIA_files/html2pdf.bundle.min.js.pobrane" id="html2pdf-js"></script>
+<script src="./Certificates – NVIDIA_files/webflow.js.pobrane" id="webflow-js"></script>
+<script src="./Certificates – NVIDIA_files/troubleshooting.js.pobrane" id="troubleshooting-js"></script>
+<script src="./Certificates – NVIDIA_files/menu.js.pobrane" id="menu-js"></script>
+<script src="./Certificates – NVIDIA_files/contact-us.js.pobrane" id="contact-us-js"></script>
+<script id="nvidia-download_certificate-js-extra">
+var DownloadCertificateSettings = {"theme_uri":"https:\/\/courses.nvidia.com\/wp-content\/themes\/ibl-nvidia-wp-theme"};
+</script>
+<script src="./Certificates – NVIDIA_files/download_certificate.js.pobrane" id="nvidia-download_certificate-js"></script>
+
+
+
+<script>_satellite["_runScript3"](function(event, target, Promise) {
+(function() {
+
+  var didInit = false;
+
+  function initMunchkin() {
+
+    if(didInit === false) {
+
+      didInit = true;
+
+      Munchkin.init('156-OFN-742');
+
+    }
+
+  }
+
+  var s = document.createElement('script');
+
+  s.type = 'text/javascript';
+
+  s.async = true;
+
+  s.src = '//munchkin.marketo.net/munchkin.js';
+
+  s.onreadystatechange = function() {
+
+    if (this.readyState == 'complete' || this.readyState == 'loaded') {
+
+      initMunchkin();
+
+    }
+
+  };
+
+  s.onload = initMunchkin;
+
+  document.getElementsByTagName('head')[0].appendChild(s);
+
+})();
+});</script><script>_satellite["_runScript4"](function(event, target, Promise) {
+try {
+
+
+    if (typeof jQuery != 'undefined' || typeof $ != 'undefined') {
+
+
+
+        if (window.$) {
+            $(document).on("FP-formSubmitSuccess", function() {
+                var formId = formSubmitData.formID;
+                try {
+                   _satellite.logger.log("inside formSUbmit 1");
+                    _satellite.track('formSubmit', {
+                        formID: formId
+                    });
+                } catch (e) {}
+            });
+
+            $(document).on("fp-success-message", function() {
+                var formId = _satellite.getVar('formId');
+                //console.log('fp-success-message');
+                if (formId) {
+                  _satellite.logger.log("inside formSUbmit 2");
+                    _satellite.track('formSubmit', {
+                        formID: formId
+                    });
+                }
+            });
+
+            if (window['MktoForms2']) {
+                MktoForms2.whenReady(function(form) {
+                  var ncid_c=_satellite.cookie.get('sc_cmp');
+                  var elem=document.querySelector('form input[name*="ncid"]');
+                  if(typeof ncid_c !="undefined" && ncid_c!="" ){
+                    elem.setAttribute("value",ncid_c);
+                  }else if(document.location.href.indexOf('ncid=')<0){
+                    elem.setAttribute("value","no-ncid");
+                  }
+                  
+                  
+
+                    form.onSuccess(function(vals) {
+                        //var vals = form.vals();   
+                        var fId = 'mktoform_' + vals["formid"];
+                        console.log(fId);
+                        _satellite.track('formSubmit', {
+                            formID: fId
+                        });
+                        if (fId == 'mktoform_7430' || fId == 'mktoform_7431' || fId == 'mktoform_7433')
+							_satellite.track('mktoform_7430', {
+                                formID: fId
+                            });
+							
+
+                        if (fId == 'mktoform_4627') {
+                            _satellite.track('mktoform_4627', {
+                                formID: fId
+                            });
+                        }
+
+                        if (fId == 'mktoform_11899') {
+                            _satellite.track('mktoform_11899', {
+                                formID: fId
+                            });
+                        }
+                       
+                    });
+
+
+                });
+            }
+
+            document.addEventListener('formSubmissionSuccess', triggerFormOmni, true);
+
+            function triggerFormOmni(e) {
+                // try{
+                var formName = '';
+                if (e.detail.formName != "") {
+                    formName = e.detail.formName;
+                }
+              	console.log('form name',formName);
+                if (window.self != window.top) {
+                    //var formPath=$('.aemformcontainer').attr('data-form-page-path');
+                    //formId=formPath.substring(formPath.lastIndexOf('/') + 1); 
+                    if (formName) {
+                        _satellite.logger.info('form in iframe');
+                       // _satellite.track('iframeFormSubmit', {
+                          dtm_track('iframeFormSubmit', {
+                            formID: formName
+                        });
+                    }
+                } else {
+                  _satellite.logger.log('inside formsubmit 1');
+                    //_satellite.track('formSubmit', {
+                  dtm_track('formSubmit', {
+                      
+                        formID: formName
+                    });
+                }
+
+                if (formName.indexOf('spark-ebook-notify-me') > -1) {
+                    _satellite.track('spark-ebook-notify-me', {
+                        formID: 'spark-ebook-notify-me'
+                    });
+                }
+                if (formName.indexOf('merlin-ppc-display-demand-gen-form') > -1) {
+                    _satellite.track('nvf_merlin-ppc-display-demand-gen-form', {
+                        formID: 'nvf_merlin-ppc-display-demand-gen-form'
+                    });
+                }
+              if (formName.indexOf('driving-agility-in-retail-with-ai-ebook') > -1) {
+                    _satellite.track('nvf_driving-agility-in-retail-with-ai-ebook', {
+                        formID: 'nvf_driving-agility-in-retail-with-ai-ebook'
+                    });
+                }
+                //console.log(formName);
+                var purl = window.location.hostname + window.location.pathname;
+                if (purl.indexOf('en-gb/data-center/dgx-a100/') > -1 || purl.indexOf('de-de/data-center/dgx-a100/') > -1 || purl.indexOf('fr-fr/data-center/dgx-a100/') > -1 || purl.indexOf('en-gb/data-center/dgx-systems/buy/') > -1 || purl.indexOf('de-de/data-center/dgx-systems/buy/') > -1 || purl.indexOf('fr-fr/data-center/dgx-systems/buy/') > -1) {
+                    if (formName.indexOf('dgx-a100-gated-form') > -1 && (purl.indexOf('en-gb/data-center/dgx-a100/') > -1 || purl.indexOf('de-de/data-center/dgx-a100/') > -1 || purl.indexOf('fr-fr/data-center/dgx-a100/') > -1)) {
+                        _satellite.track('nvf_dgx-a100-gated-form', {
+                            formID: 'nvf_dgx-a100-gated-form'
+                        });
+                    } else {
+                        _satellite.track('nvf_dgxa100_contactus', {
+                            formID: 'nvf_dgxa100_contactus'
+                        });
+                    }
+                    //dtm_track('nvf_dgxSystemsBuy_contactus',{formID:'nvf_dgxSystemsBuy_contactus'});
+                }
+
+                //}catch(err){}
+            }
+
+            if (document.URL.indexOf('/on-demand/session/') < 0) {
+                var runOnce = true;
+                $('body').delegate("form:not([id*='search']):not([id^='Form']):not([id^='redeem']):not([id^='form']) input:not([type^='checkbox']):visible:first", "focusin", function() {
+                    if (runOnce) {
+                        var formId = $(this).closest('form').attr("id");
+
+                        if (formId.indexOf('guideContainerForm') > -1) {
+                            var formPath = $('.aemformcontainer').attr('data-form-page-path');
+                            if (formPath != undefined) {
+                                formId = formPath.substring(formPath.lastIndexOf('/') + 1);
+                            }
+                        }
+
+                        if (window.self != window.top) {
+                           var formPath = '';
+
+                            if (document.URL.indexOf('/nvidia-forms/products-notify-me/') > -1) {
+                                formPath = window.location.href;
+                                formId = formPath.substring(formPath.lastIndexOf('productName=') + 12);
+                                formId = decodeURIComponent(formId).replaceAll(' ', '-') + '-notifyme';
+                            } else {
+                                formPath = $('.aemformcontainer').attr('data-form-page-path');
+                                formId = formPath.substring(formPath.lastIndexOf('/') + 1);
+                            }
+                            if (formId) {
+                               _satellite.logger.info('form in iframe');
+                             //   _satellite.track('iframeFormStart', {
+                                  dtm_track('iframeFormStart', {
+                                    formID: formId
+                                });
+                            }
+                        } else {
+                            if (formId) {
+                                _satellite.logger.info('form not in iframe');
+                               // _satellite.track('formStart', {
+                                  dtm_track('formStart', {
+                                    formID: formId
+                                });
+                            }
+                        }
+                        runOnce = false;
+                        //}
+                    }
+                });
+            }
+            var dn = window.location.host;
+            if (dn.indexOf('profile.nvidia.com') > -1) {
+                var execOnce = true;
+                $('body').delegate("form input[type='email']:visible:first", "focusin", function() {
+                    if (execOnce) {
+                        var formId = 'Unsubscribe';
+
+                        if (formId) {
+                            _satellite.track('formStart', {
+                                formID: formId
+                            });
+                        }
+                        execOnce = false;
+                    }
+                });
+
+            }
+          
+         
+
+
+        }
+    }
+   var runOnce = true;
+
+                $('div.side-layout').delegate("form:not([id*='search']):not([id^='Form']):not([id^='redeem']):not([id^='form']) input:not([type^='checkbox']):visible:first", "focusin", function() {
+                                         if (runOnce) {
+                       var formId = $('.gtcRegistration form').attr('class');
+                                           if (formId) {
+                                
+                               dtm_track('formStart', {
+                                    formID: formId
+                                });
+                                                 }
+                       
+                        
+                       runOnce = false;
+                      
+                    }
+                });
+
+
+
+} catch (e) {}
+});</script><script>_satellite["_runScript5"](function(event, target, Promise) {
+window.ClickOmniTrack=function(obj,eventVal,prefix,secName){  
+  try
+   { s.eVar42=s.prop42='';
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+      s.linkTrackVars='events,eVar10,prop10';
+    	if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+        console.log('click omni track Do not track',_satellite.getVar('browserDoNotTrack'));
+      s.tl(obj,'o',secName); }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+	 }catch(error){}}
+window.ClickOmniSearch=function(obj,eventVal,prefix,secName){  
+  try
+   { s.eVar42=s.prop42='';
+    	var srchKeyword=secName;
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+    	s.eVar20=s.prop20=srchKeyword;
+      s.linkTrackVars='events,eVar10,prop10,eVar20,prop20';
+    	if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+      s.tl(obj,'o',secName); }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+	 }catch(error){}}
+window.ClickOmniPart=function(obj,eventVal,prefix,secName,partner){  
+  try
+   { s.eVar42=s.prop42='';
+      secName = prefix+secName+":"+s.pageName ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+      s.eVar15=s.prop15=partner.toLowerCase();
+      s.linkTrackVars='events,eVar10,prop10,prop15,eVar15';
+    	if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+      s.tl(obj,'o',secName); }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+	 }catch(error){}}
+
+window.ClickOmniTrackNav=function(obj,eventVal,prefix,secName){  
+  try
+   {  s.eVar42=s.prop42='';
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+      s.eVar11=s.prop11=secName;
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.linkTrackVars='events,eVar10,prop10,prop11,eVar11';
+    	if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+        console.log('Nav Do not track',_satellite.getVar('browserDoNotTrack'));
+        s.tl(obj,'o',secName); }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+	 }catch(error){}}
+
+
+window.ClickOmniProd=function(obj,eventVal,prefix,secName,pVal){  
+try
+   {   s.eVar42=s.prop42='';
+     var secN=secName.lastIndexOf('/')+1;
+      secName=secName.substring(secN);
+      secName=secName.toLowerCase();
+      secName=secName.replace(/\//g,':').replace('#','');
+      secName = prefix+secName+":"+s.pageName;
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName; 
+      s.products=";"+pVal;
+      s.linkTrackVars='events,eVar10,prop10,products';
+    	if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+        s.tl(obj,'o',secName); }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+	  }catch(error){}}
+
+window.ClickOmniGFN = function(obj,eventVal,prefix,eventName,jId,platform){
+  try{
+    secName=eventName;
+    s.eVar42=s.prop42='';
+    pagename=_satellite.getVar('pageName')
+    s.pageName=pagename;
+    s.eVar1=window.location.href;
+    s.eVar62=jId;
+      secName = prefix+secName+":"+pagename ;
+     secName=secName.toLowerCase();
+      s.events=eventVal;s.linkTrackEvents=eventVal;
+      s.eVar10=s.prop10=secName;
+    	s.eVar46="D=mid";
+    	s.eVar63=platform;
+      s.linkTrackVars='events,eVar10,prop10,eVar1,eVar62,eVar46,eVar63';
+    if(eventName=='webuiloaded'){
+      console.log('inside event');
+      if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+        s.t();}
+    }else{
+      if(_satellite.getVar('browserDoNotTrack')=="disabled"){
+        s.tl(obj,'o',secName); }
+    }
+	    s.linkTrackVars="None"
+	    s.linkTrackEvents="None"
+    
+  }catch(e){}
+}
+
+  
+});</script><script>
+try {
+    $('.nav-header a.nav-search-link').click(function() {
+        ClickOmniTrack(true, 'event10', 'img:header:', 'search');
+    });
+    $('.brand-container a.brand-link').click(function() {
+        ClickOmniTrack(true, 'event10', 'logo:header:', 'nvidia')
+    });
+    $('.brand-container a.dropdown-arrow').click(function() {
+        ClickOmniTrack(true, 'event10', 'link:header:nav:', 'nvidia-dropdown')
+    });
+    $('.menu-container .global-nav-link').click(function() {
+        var $this = $(this);
+        var getCal = $this.children('img.global-nav-image');
+        if (getCal.length > 0) {
+            ClickOmniTrackNav(true, 'event10,event11', 'img:header:nav:dropdown:' + $this.parents('.xl-8').find('.nav-section-title .body-text').text() + ':', $this.children('.global-nav-title').text());
+        } else {
+            ClickOmniTrackNav(true, 'event10,event11', 'link:header:nav:dropdown:' + $this.parents('.xl-4').find('.nav-section-title .body-text').text() + ':', $this.text());
+        }
+    });
+    $('.nav-tools-container a.nav-profile-link').click(function() {
+        ClickOmniTrack(true, 'event10', 'img:header:nav:', 'my account')
+    });
+    $('.sub-brand-nav a.sub-brand-name #sub-brand-logo').click(function() {
+        var getAttr = $(this).attr('src');
+        var getVal = getAttr.substring(getAttr.lastIndexOf('/') + 1).split('-Logo')[0];
+        ClickOmniTrack(true, 'event10', 'logo:header:', getVal);
+    });
+    if (document.URL.indexOf('www.nvidiaaiconference.com') > -1) {
+        $('.sub-brand-nav a.sub-brand-link,#sub-brand .sub-brand-name').click(function() {
+            var getTxt = $(this).text().trim();
+            ClickOmniTrackNav(true, 'event10,event11', 'link:header:nav:', getTxt)
+        })
+    }
+} catch (e) {}
+</script><script>_satellite["_runScript6"](function(event, target, Promise) {
+try{
+$('#design .cta-preorder.maxq a').click(function(){var getVal=$(this).text();var head=$(this).parent().siblings('h2').text();ClickOmniTrack(this,'event10','button:section:'+head+':',getVal);});}
+catch(e){}
+});</script><script>_satellite["_runScript7"](function(event, target, Promise) {
+try{
+  $('#searchform').submit(function(){  
+  var searchQuery = $(this).find('input[name="q"]').val();
+     //console.log('search submitted', searchQuery);
+    console.log($('.search-results-item.no-results').length);
+  if(searchQuery){
+    _satellite.track('searchEvent',{internalSearchQuery:searchQuery,elementLocation:'header'});
+  }
+  });
+
+
+
+
+
+}catch(e){}
+});</script><script>_satellite["_runScript8"](function(event, target, Promise) {
+function generateToken(){var e=(new Date).getTime(),n=performance&&performance.now&&1e3*performance.now()||0;return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,(function(o){var x=16*Math.random();return e>0?(x=(e+x)%16|0,e=Math.floor(e/16)):(x=(n+x)%16|0,n=Math.floor(n/16)),("x"===o?x:3&x|8).toString(16)}))}jQuery(document).ready((function(){const e="nvweb_A",n="nvweb_E";if("undefined"!=typeof Cookies&&void 0===Cookies.get("nvweb_A")){const n=generateToken(),o=new Date(3147483647e3).toUTCString();document.cookie=e+"="+n+";domain=.nvidia.com;path=/; expires="+o}var o=new RegExp("[?&]cookieNameEmail=([^&#]*)").exec(window.location.href);if(null!=o){NVIDIAGDC.Browser.getUrlParameter("nvweb_E");const e=new Date(3147483647e3).toUTCString();document.cookie=n+"="+o[1]+";domain=.nvidia.com;path=/; expires="+e}}));
+});</script><script>
+try{document.URL.indexOf("/gtc")<0&&document.URL.indexOf("/ja-jp/geforce/products/10series/laptops/max-q/")<0&&document.URL.indexOf("/en-us/geforce/products/10series/laptops/max-q/")<0&&$(".subnav-container a.breadcrumb-link span, .subnav-container a.breadcrumb-page-link span").click((function(){var e=$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("href"),t="";window.location.href.indexOf("max-q")>-1&&"#shop"==e?ClickOmniTrackNav(this,"event10,event11,event14","button:header:sub-nav:","notify me"):"#buynow"==e||"#shop"==e?ClickOmniTrackNav(this,"event10,event11,event2","button:header:sub-nav:","buy now"):"#top"==e&&"sub-btn1"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#top"==e&&"sub-btn2"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#top"==e&&"sub-btn3"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#top"==e&&"sub-btn4"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#"==e&&"sub-btn3"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#"==e&&"sub-btn4"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")?(t=$(this).closest(".breadcrumb-element").text().trim(),ClickOmniTrackNav(this,"event10,event11","link:header:sub-nav:",t)):e.indexOf("https://")>-1||e.indexOf("http://")>-1?(e=$(this).text().trim(),console.log("test:"+e),ClickOmniTrackNav(this,"event10,event11","link:header:sub-nav:",e)):"#rapids"==e&&"sub-btn2"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")||"#rapids"==e&&"sub-btn4"==$(this).parent("a.breadcrumb-link,a.breadcrumb-page-link").attr("id")?(t=$(this).closest(".breadcrumb-element").text().trim(),ClickOmniTrackNav(this,"event10,event11","link:header:sub-nav:",t)):ClickOmniTrackNav(this,"event10,event11","link:header:sub-nav:",e)})),$(".page-footer__links .page-footer-link-set__links li a").click((function(){var e=$(this).text();ClickOmniTrack(this,"event10","link:footer:",e)})),$(".page-footer__subscribe .subscribe-container .button .btn,.page-footer__subscribe .subscribe-container .button-pascal .btn-pascal").click((function(){var e=$(this).text();ClickOmniTrack(this,"event10","button:footer:",e)}))}catch(e){}
+</script><script>_satellite["_runScript9"](function(event, target, Promise) {
+try{var path=window.location.host+window.location.pathname;document.URL.indexOf("/geforce/gaming-laptops/its-in/")<0&&document.URL.indexOf("/industries/retail/")<0&&document.URL.indexOf("/shield/shop")<0&&!path.endsWith("/shield/")&&document.URL.indexOf("/shield/compare/")<0&&document.URL.indexOf("/shield/buy")<0&&document.URL.indexOf("data-center/virtual-solutions/")<0&&document.URL.indexOf("/design-visualization/cinema-4d-redshift-bundle/")<0&&$(".text-button .button div.btn").click((function(){var t=$(this).text().toLowerCase();"view all android games"!=$(this).text().toLowerCase()&&"view all pc games"!=$(this).text().toLowerCase()||ClickOmniTrack(this,"event10","button:section:",t)})),setTimeout((function(){document.URL.indexOf("/healthcare/")<0&&document.URL.indexOf("/gtc-dc/")<0&&document.URL.indexOf("/foundation/")<0&&document.URL.indexOf("/shield/")<0&&document.URL.indexOf("/geforce/")<0&&document.URL.indexOf("/design-visualization/")<0&&document.URL.indexOf("/self-driving-cars/")<0&&document.URL.indexOf("/gpu-cloud/")<0&&document.URL.indexOf("/data-center/")<0&&document.URL.indexOf("/deep-learning-ai/")<0&&document.URL.indexOf("/titan/")<0&&document.URL.indexOf("/autonomous-machines/")<0&&document.URL.indexOf("/gtc/")<0&&document.URL.indexOf("/contact/")<0&&$(".columnLayout .text-left a.regular-btn.brand-green.btn-manual.link-btn div.btn").click((function(){var t=$(this).text(),e=$(this).parents(".column-2").find(".text-left h3.title, .text-left h2.title").text();e.length>4&&e.length<20?ClickOmniTrack(this,"event10","button:section:"+e+":",t):ClickOmniTrack(this,"event10","button:section:",t)})),document.URL.indexOf("/shield/games/gamestream/")>-1&&$(".columnLayout .text-left a.regular-btn.brand-green.btn-manual.link-btn div.btn").click((function(){var t=$(this).text(),e=$(this).parents(".column-2").find(".text-left h3.title, .text-left h2.title").text();e.length>4&&e.length<20?ClickOmniTrack(this,"event10","button:section:"+e+":",t):ClickOmniTrack(this,"event10","button:section:",t)})),$(".specs-container .info-icon a.link-txt,.specs-container .package-icon a.link-txt").click((function(){ClickOmniTrack(this,"event10","link:section:specs:",$(this).text().trim())}))}),2e3),$("#tf3-copy-container .grid-4 a.white-box-bttn").click((function(){var t=$(this).text().toLowerCase();"view all android games"!=t&&"view all pc games"!=t||ClickOmniTrack(this,"event10","button:section:",t)})),document.URL.indexOf("shield/shield-tv/")<0&&$("#features .tabs-wrapper ul.tabs li").click((function(){var t=$(this).text();ClickOmniTrack(this,"event10","button:section:tabs:",t)})),document.URL.indexOf("/foundation/")<0&&document.URL.indexOf("/csr/")<0&&document.URL.indexOf("/deep-learning-ai/industries/ai-innovators")<0&&document.URL.indexOf("/data-center/index-paraview-plugin/")<0&&document.URL.indexOf("/design-visualization/vmware/")<0&&document.URL.indexOf("/design-visualization/citrix/")<0&&$(".videoComponent .watchvideo svg,.videoComponent .watchvideo .icon-text-pos").click((function(){ClickOmniTrack(this,"event10","button:section:","watch the video")})),$("img[title='SHIELD TABLET AMAZON']").click((function(){ClickOmniTrack(this,"event10,event15","img:section:shield tablet:","amazon")})),$(".global-footer__links li a").click((function(){ClickOmniTrack(this,"event10","link:footer:",$(this).text().trim())})),$(".global-footer__region a").click((function(){ClickOmniTrack(this,"event10","link:footer:","country-selector")}))}catch(t){}
+});</script><script>_satellite["_runScript10"](function(event, target, Promise) {
+try{window._6si=window._6si||[],window._6si.push(["setEpsilonKey","6f578ba72568231347d1bddb7102e53695302c28"]),window._6si.push(["enableEventTracking",!0]),window._6si.push(["setToken","eb417ec30d332e34d732e2916f185311"]),window._6si.push(["setEndpoint","b.6sc.co"]),function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//j.6sc.co/6si.min.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(e,s)}()}catch(e){}
+});</script><script>
+function gtag(){dataLayer.push(arguments)}var script=document.createElement("script");script.type="text/javascript",script.async=!0,script.src="https://www.googletagmanager.com/gtag/js?id=AW-1041695361",document.getElementsByTagName("head")[0].appendChild(script),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-1041695361"),gtag("event","page_view",{send_to:"AW-1041695361",user_id:"replace with value"}),function(e,t,n,a,i,s,r){e.fbq||(i=e.fbq=function(){i.callMethod?i.callMethod.apply(i,arguments):i.queue.push(arguments)},e._fbq||(e._fbq=i),i.push=i,i.loaded=!0,i.version="2.0",i.queue=[],(s=t.createElement(n)).async=!0,s.src=a,(r=t.getElementsByTagName(n)[0]).parentNode.insertBefore(s,r))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js"),fbq("init","161755414605325"),fbq("track","PageView"),_linkedin_partner_id="84497",window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[],window._linkedin_data_partner_ids.push(_linkedin_partner_id),function(){var e=document.getElementsByTagName("script")[0],t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://snap.licdn.com/li.lms-analytics/insight.min.js",e.parentNode.insertBefore(t,e)}();
+</script><script>_satellite["_runScript11"](function(event, target, Promise) {
+!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),o.push=o,o.loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src=c,(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js"),fbq("init","161755414605325"),fbq("track","PageView");
+});</script><script>
+_linkedin_partner_id="84497",window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[],window._linkedin_data_partner_ids.push(_linkedin_partner_id),function(){var n=document.getElementsByTagName("script")[0],i=document.createElement("script");i.type="text/javascript",i.async=!0,i.src="https://snap.licdn.com/li.lms-analytics/insight.min.js",n.parentNode.insertBefore(i,n)}();
+</script><script>
+function gtag(){dataLayer.push(arguments)}var script=document.createElement("script");script.type="text/javascript",script.src="https://www.googletagmanager.com/gtag/js?id=AW-1041695361",document.getElementsByTagName("head")[0].appendChild(script),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-1041695361");
+</script><script>
+gtag("event","page_view",{send_to:"AW-1041695361",user_id:"replace with value"});
+</script><img alt="" src="./Certificates – NVIDIA_files/ipv" style="display: none;"></body></html>

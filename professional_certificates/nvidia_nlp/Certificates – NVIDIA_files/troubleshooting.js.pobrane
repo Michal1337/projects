@@ -1,0 +1,11 @@
+$(document).ready(function(){
+  $('.tr-question').each(function(index) {
+    $(this).unbind('click').on("click", function() {
+      if (($('.tr-answer')[index].style.display=='') || $('.tr-answer')[index].style.display=='none'){
+        $('.tr-answer')[index].style.display='block';
+      }else{
+        $('.tr-answer')[index].style.display='none';
+      }
+    });
+  });
+});

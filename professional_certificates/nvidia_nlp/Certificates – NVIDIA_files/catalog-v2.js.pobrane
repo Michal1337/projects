@@ -1,0 +1,1168 @@
+$ = jQuery;
+
+$(document).ready(function() {
+  if($('.search_section')[0]){
+    set_search_query();
+    get_org_programs_v2();
+    fetch_course_discovery_data();
+    search_handlers();
+  }
+})
+
+function hide_all_lists() {
+  var w_dropdown_list = document.querySelectorAll('.w-dropdown-list');
+  for (var i = 0; i < w_dropdown_list.length; i++) {
+    w_dropdown_list[i].style.display = "none";
+  }
+}
+
+function fetch_course_discovery_data() {
+  search_parameters = get_search_parameters();
+  const course_discovery_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/course-discovery/';
+  $.ajax({
+    type: 'get',
+    url: course_discovery_url,
+    data: {
+      page: search_parameters.page,
+      search_string: search_parameters.search_query,
+      topic: search_parameters.topics,
+      level: search_parameters.level,
+      subject: search_parameters.subject
+    },
+    success: function(data) {
+      let facets = data['facets'];
+      let results = (data['total']);
+      let myStorage = window.localStorage;
+      myStorage.setItem('number_of_courses', results);
+      populate_filters(facets, search_parameters);
+      populate_results(data, search_parameters);
+      populate_meta(data, search_parameters);
+      populate_type_meta();
+
+    }
+  });
+}
+
+function populate_results(data, search_parameters) {
+  populate_results_grid(data['results'])
+}
+
+function populate_results_grid(courses) {
+  const course_meta_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/course-metadata/';
+  var counter = 0;
+  for (var i = 0; i < courses.length; i++) {
+    params = {
+      'course_id': courses[i]['data']['id'],
+    }
+
+    $.ajax({
+      type: 'get',
+      url: course_meta_url,
+      data: params,
+      success: function(data) {
+      if(data.detail =='Not found.'){
+        return '';
+      }
+
+        const courses_grid = document.querySelector('.resuts_div');
+        var course_box = document.createElement('div');
+        course_box.className = 'course-rec-3-wide search_section_box';
+        let display_name = data.display_name;
+        let course_name_long = trim_string(display_name,47);
+        let course_name_md = trim_string(display_name,34);
+        let course_name_short = trim_string(display_name,16);
+
+
+        // let author = '';
+        // if (data.instructor_info.instructors.length > 0) {
+        //   author = data.instructor_info.instructors[0].name;
+        // }
+
+        if(data.description){
+          data.description =   data.description.replace(/(<([^>]+)>)/gi, "");
+        }
+        let description = trim_string(data.description,120);
+        let description_tablet = trim_string(data.description,76);
+        let description_mobile = trim_string(data.description,33);
+
+
+
+        let topic='';
+        if(data.topics){
+          topic = data.topics[0];
+        }
+
+        let slug = data.course_slug;
+        if (!data.course_slug){
+          slug = data.course_key
+        }
+
+        let duration_display ="flex"
+        if (!data.duration){
+          duration_display ="none"
+        }
+
+        let level_display ="flex"
+        if (!data.level){
+          level_display ="none"
+        }
+
+        let features_display ="block"
+        if((!data.duration) && (!data.level)){
+          features_display ="none"
+        }
+
+        let topic_visibility= "visible";
+        if(!topic){
+          topic_visibility ="hidden"
+        }
+
+
+        course_box.innerHTML = `<a href="`+CatalogV2Settings.home_url + "/courses/"+slug+` " class="course_link_wide w-inline-block search_section_course">
+        <div class="course-header-rec-3-wide">
+        <div style="opacity: 0;" class="overlay">
+        <div class="div-block-45"></div>
+        </div><img onerror="this.style.visibility='hidden'" src="` + CatalogV2Settings.lms_url + data.course_image_asset_path + `" height="30" alt="" class="image-34-wide">
+        <div class="unit_type_div w-clearfix"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/course_icon.png" loading="lazy" alt="" class="type_img">
+        <div class="text-block-52">Course</div>
+        </div>
+        </div>
+
+        <div class="course-body-4-wide">
+          <div class="unit-wide-header-holder">
+          <div class="text-block-39 wide">` + course_name_long + `</div>
+          <div class="text-block-39 wide mobile">` + course_name_md + `<br></div>
+          <div class="text-block-39 wide mobile_short">` + course_name_short + `<br></div>
+          <div class="course_l pm text-block-45 wide" style="visibility:`+topic_visibility+`">`+topic+`</div>
+          <div class="unit-wide-description">` + description + `</div>
+          <div class="unit-wide-description tablet">` + description_tablet + `</div>
+          <div class="unit-wide-description mobile">` + description_mobile + `</div>
+        </div>
+
+        <div class="line4 n t" style="display:`+features_display+`"></div>
+
+
+        <div class="course-features flex-display" style="display:`+features_display+`">
+
+          <div class="div-block-31 wide" style="display:`+duration_display+`">
+          <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/clock.png?v=1" alt="" class="img-trg-4"></div>
+          <div class="features_block-2">
+          <div class="features-title-5">`+ data.duration +`</div>
+        </div>
+        </div>
+        <div class="div-block-31 wide" style="display:`+level_display+`">
+        <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/volume.png?v=1" alt="" class="img-trg-4"></div>
+        <div class="features_block-2">
+        <div class="features-title-5">` + data.level + `</div>
+        </div>
+        </div>
+                      <div class="div-block-31 outline_div">
+                        <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/out_icon.png" alt="" class="img-trg"></div>
+                        <div class="features_block">
+                          <div class="features-title-3">Outlines</div>
+                        </div>
+                      </div>
+                      <div class="div-block-31 certificate_div">
+                        <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/cert_icon.png" alt="" class="img-trg"></div>
+                        <div class="features_block">
+                          <div class="features-title-3">Certificate</div>
+                        </div>
+                      </div>
+        </div>
+
+
+
+        </div>
+        </a>`;
+
+        courses_grid.append(course_box)
+        counter++;
+      }
+    });
+  }
+}
+
+
+function trim_string(string, length) {
+  if(!string){
+    return '';
+  }
+  if(string.length > length){
+
+
+  var maxLength = length // maximum number of characters to extract
+  //trim the string to the maximum length
+  var trimmedString = string.substr(0, maxLength);
+
+  //re-trim if we are in the middle of a word
+  trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+  return trimmedString + '...';
+}else{
+  return string;
+}
+}
+
+
+
+function add_pagination(number, search_parameters) {
+  let active_page = search_parameters.page;
+  const catalog_url = CatalogV2Settings.home_url + "/catalog/"
+
+
+  let number_of_pages = Math.floor(number / 20);
+  show_arrows(number_of_pages, search_parameters.page, catalog_url);
+
+  const pagination_section = document.querySelector('.page_numbers');
+  if (active_page <= 3) {
+    for (var i = 0; i < 3 && (i < number_of_pages); i++) {
+      let a_class = '';
+      let a = document.createElement('a');
+      if (active_page == i + 1) {
+        a_class = "act";
+      }
+      a.className = 'pag_num w-inline-block';
+      a.href = catalog_url + '/?i=' + (i + 1);
+      a.innerHTML = `<div class="page_num ` + a_class + `">` + (i + 1) + `</div>`;
+      pagination_section.append(a);
+    }
+  }
+
+  if (active_page > 3 && active_page <= number_of_pages - 3) {
+    a = document.createElement('a');
+    a.className = 'pag_num w-inline-block';
+    a.href = catalog_url + '/?i=' + (1);
+    a.innerHTML = `<div class="page_num">` + 1 + `</div>`;
+    pagination_section.append(a);
+    pagination_section.append('...');
+    a = document.createElement('a');
+    a.className = 'pag_num w-inline-block';
+    a.href = catalog_url + '/?i=' + (active_page);
+    a.innerHTML = `<div class="page_num act">` + (active_page) + `</div>`;
+    pagination_section.append(a);
+
+  }
+
+
+  if (active_page > number_of_pages - 3) {
+    let a = document.createElement('a');
+    a.className = 'pag_num w-inline-block';
+    a.href = catalog_url + '/?i=' + (1);
+    a.innerHTML = `<div class="page_num">` + 1 + `</div>`;
+    pagination_section.append('...');
+
+    for (var i = number_of_pages - 3; i < number_of_pages; i++) {
+
+      let a_class = '';
+      a = document.createElement('a');
+      if (active_page == i + 1) {
+        a_class = "act";
+      }
+      a.className = 'pag_num w-inline-block';
+      a.href = catalog_url + '/?i=' + (i + 1);
+      a.innerHTML = `<div class="page_num ` + a_class + `">` + (i + 1) + `</div>`;
+      pagination_section.append(a);
+    }
+  } else if (number_of_pages > 3) {
+    pagination_section.append('...');
+    a = document.createElement('a');
+    a.className = 'pag_num w-inline-block';
+    a.href = catalog_url + '/?i=' + (number_of_pages);
+    a.innerHTML = `<div class="page_num">` + number_of_pages + `</div>`;
+    pagination_section.append(a);
+  }
+
+}
+
+
+function show_arrows(number_of_pages, search_parameters, catalog_url) {
+  let left_arrow = document.querySelector('.left_pag');
+  let right_arrow = document.querySelector('.right_pag');
+
+  if (search_parameters > 1) {
+    left_arrow.style.display = "block";
+    left_arrow.href = catalog_url + '/?i=' + (search_parameters - 1);
+  }
+  if (search_parameters < number_of_pages) {
+    right_arrow.style.display = "block";
+    right_arrow.href = catalog_url + '/?i=' + (parseInt(search_parameters) + 1);
+
+  }
+
+
+}
+
+
+function populate_filters(filter_data, search_parameters) {
+  $('.col_1 > .filter_option:not(.name_filter)').remove();
+  const available_filters = ["subject", "level", "topics"];
+  for (let [key, value] of Object.entries(filter_data)) {
+    if (available_filters.indexOf(key) > -1) {
+      append_filter(key, value['terms'], search_parameters);
+    }
+  }
+  add_filter_animation();
+}
+
+
+function append_filter(name, data, search_parameters) {
+  let filter_options_class = [];
+  filter_options_class[name] = '';
+  let active_value = [];
+
+  for (let [key, value] of Object.entries(search_parameters)) {
+    if ((key == name) && (value != null)) {
+      filter_options_class[name] = 'active';
+      active_value[name] = value;
+    }
+  }
+
+  let plus_display, dash_display ='';
+  if(filter_options_class[name] =='active' ){
+    plus_display = 'none';
+    dash_display= 'block';
+  }
+
+  const filter_section = document.querySelector('.col_1');
+  let filter = document.createElement('div');
+  filter.className = 'filter_option ';
+  filter.innerHTML = `<div data-w-id="73f3a04a-0e26-3b53-c8b2-12d2115ba521" data-name=` + name + ` class="filter_row `+filter_options_class[name]+`">
+  <div class="text-block-47">` + titleCase(name) + `</div>
+  <img style="display:`+dash_display+`" src="`+CatalogV2Settings.theme_uri+`/inc/images/delete.png" loading="lazy" alt="" data-name=` + name + ` class="dash_icon">
+  <img style="display:`+plus_display+`" src="`+CatalogV2Settings.theme_uri+`/inc/images/plus.png" loading="lazy" alt="" data-name=` + name + ` class="plus_icon">
+  </div>
+  <div data-name=` + name + ` class="filter_options ` + filter_options_class[name] + `" style="display:none;">
+  <div class="f_search">
+  <div id="form" class="form-block filter home ">
+  <form id="email-form" class="form_` + name + `"  class="form-2 filter home">
+  <div class="div-block-44 filter home"><input type="text" class="filter_search w-input" maxlength="256" data-name="`+name+`" placeholder="Search by ` + titleCase(name) + `">
+  <a href="" class="link-block-2 w-inline-block search_a"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/search_icon.png" alt="" class="image-33"></a>
+  </div>
+  </form>
+  </div>
+  </div>
+  </div>`;
+
+  filter_section.append(filter);
+  const form_subject = document.querySelector('.form_' + name);
+  var keys = Object.keys(data);
+  let checkbox_attribute = [];
+  for (let [key, value] of Object.entries(data)) {
+    checkbox_attribute[value] = '';
+    if (active_value[name] == key) {
+      checkbox_attribute[value] = 'checked';
+    }
+    let check_w_option = document.createElement('div');
+    check_w_option.className = 'check_w_options '+name;
+    check_w_option.innerHTML = `<div class="radio_in">
+    <label class="filter_checkbox w-radio">
+    <input type="radio" data-name="` + name + `" name=` + name + ` value='` + key + `' class="-formradioinput checkbox w-radio-input" ` + checkbox_attribute[value] + `>
+    <span class="radio-button-label -label" for="radio">` + key + ` (` + value + `)</span></label></div>`
+    form_subject.append(check_w_option);
+  }
+}
+
+function titleCase(string) {
+  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+}
+
+
+
+function search_handlers() {
+  let myStorage = window.localStorage;
+  const pageAccessedByReload = (
+    (window.performance.navigation && window.performance.navigation.type === 1) ||
+    window.performance
+    .getEntriesByType('navigation')
+    .map((nav) => nav.type)
+    .includes('reload')
+  );
+
+  if (pageAccessedByReload) {
+    myStorage.clear()
+  }
+
+  window.onunload = window.onbeforeunload = function(event) {
+    myStorage.clear()
+  };
+
+  $(".search_input").on('keyup', delayEventFire(function(e) {
+    myStorage.setItem('search_query', this.value);
+    clear_results();
+    fetch_course_discovery_data();
+
+    //if query is empty show default programs
+    if(this.value !=''){
+      fetch_program_discovery_data_v2();
+    }
+    else{
+      get_org_programs_v2();
+    }
+
+  }, 700));
+}
+
+function clear_results() {
+  $('.resuts_div > .course-rec-3-wide').remove();
+}
+
+
+function populate_filters_handler() {
+  const catalog_facets_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/catalog-facets/';
+  $.ajax({
+    type: 'get',
+    url: catalog_facets_url,
+    success: function(data) {
+      let facets = data['facets'];
+      facets = [];
+      // if(facets['org']){
+      populate_filters(data['facets']);
+      // }
+
+    }
+  });
+}
+
+function delayEventFire(fn, ms) {
+  let timer = 0
+  return function(...args) {
+    clearTimeout(timer)
+    timer = setTimeout(fn.bind(this, ...args), ms || 0)
+  }
+}
+
+function add_filter_animation() {
+  let filter_rows = $('.filter_row');
+  $('.filter_row:not(.active)').each(function(index) {
+    $(this).unbind('click').on("click", function() {
+
+
+      let filter_options = $('.filter_options[data-name="' + $(this).data('name') + '"]');
+      let plus_icon = $('.plus_icon[data-name="' + $(this).data('name') + '"]');
+      let dash_icon = $('.dash_icon[data-name="' + $(this).data('name') + '"]');
+      if (filter_options[0].style.display == "block" ) {
+        filter_options[0].style.display = "none";
+        plus_icon[0].style.display = "block";
+        dash_icon[0].style.display = "none";
+      }
+      else {
+        filter_options[0].style.display = "block";
+        plus_icon[0].style.display = "none";
+        dash_icon[0].style.display = "block";
+      }
+    });
+  });
+
+  //on filter input
+  $('.filter_search:not(.search_input)').each(function(i, filter_input) {
+    $(this).on('keyup', delayEventFire(function(e) {
+      let filter_input = $(this).val();
+      let filter_type = $(this).data('name');
+      let radio_boxes = $('.check_w_options.'+filter_type);
+      let radio_boxes_label = $('.check_w_options.'+filter_type).find('.-label');
+
+      $(radio_boxes_label).each(function(i, radio_box_label) {
+        if(radio_box_label.innerHTML.toUpperCase().includes(filter_input.toUpperCase())){
+          radio_boxes[i].style.display="block";
+        }else{
+          radio_boxes[i].style.display="none";
+        }
+        })
+    }, 700));
+  });
+
+  $('.w-radio-input').each(function(i, radio_input) {
+    $(this).on('change', delayEventFire(function(e) {
+      $(this).change(function() {
+        let radio_option = $(this).data('name');
+        let radio_value = $(this).val();
+      });
+      let myStorage = window.localStorage;
+      myStorage.setItem('number_of_programs', 0);
+      myStorage.setItem('page', 1);
+      myStorage.setItem($(this).data('name'), this.value);
+      clear_results();
+      fetch_course_discovery_data();
+      fetch_program_discovery_data_v2();
+    }, 700));
+
+  });
+
+
+  $('#filter_mobile_trigger').on('click', delayEventFire(function(e) {
+    $('.col_2')[0].style.display="none";
+    $('.col_1')[0].style.display="block";
+  }, 100));
+
+  $('#filter_mobile_hide').on('click', delayEventFire(function(e) {
+    $('.col_2')[0].style.display="block";
+    $('.col_1')[0].style.display="none";
+  }, 100));
+
+}
+
+function get_search_parameters() {
+  let myStorage = window.localStorage;
+  let search_query = myStorage.getItem('search_query') || null;
+  let page = myStorage.getItem('page') || 1;
+
+
+  let search_params = {
+    page: page,
+    search_query: search_query,
+    topics: myStorage.getItem('topics'),
+    level: myStorage.getItem('level'),
+    subject: myStorage.getItem('subject')
+
+  };
+
+  return search_params;
+}
+
+
+function populate_meta(data, search_parameters) {
+  clear_meta();
+  $('#results_text').html('Showing ' + data.total + ' result' + (data.total == 1 ? "" : "s"))
+  has_filters = false;
+  for (let [key, value] of Object.entries(search_parameters)) {
+    if ((key != 'page') && (value != null)) {
+      let filter_tab = document.createElement('div');
+      filter_tab.className = 'filter_tab';
+      filter_tab.setAttribute('data-name', key);
+
+      filter_tab.innerHTML = `<div class="tab_text">` + value + `</div>
+      <div class="x_icon"></div>`
+      $('#filter_tabs')[0].append(filter_tab);
+      has_filters = true;
+    }
+  }
+  if (has_filters) {
+    let clear_filters = document.createElement('div');
+    clear_filters.className = 'filter_tab';
+    clear_filters.setAttribute('data-name', 'clear');
+
+    clear_filters.innerHTML = `<div class="tab_text">Clear All</div>`
+    $('#filter_tabs')[0].append(clear_filters);
+  }
+
+  $('.filter_tab').each(function(i, radio_input) {
+
+    $(this).on('click', delayEventFire(function(e) {
+      let tab_name = $(this).data('name');
+      handle_clear_tab(tab_name)
+    }, 700));
+  });
+
+
+
+  const pagination_div = $('.pagination_div')[0]
+  const results_per_page = 20;
+  let current_page = search_parameters.page;
+
+  let number_of_pages = Math.ceil(data.total/results_per_page);
+
+  //add left arrow
+  let left_arrow = document.createElement('div');
+  left_arrow_class ='';
+  if(current_page == 1){
+    left_arrow_class = 'hidden'
+  }
+  left_arrow.className = 'pagination_item '+left_arrow_class;
+  left_arrow.setAttribute('data-value', 'left');
+  left_arrow.innerHTML = `<i class="fas fa-chevron-left"></i>`;
+  pagination_div.append(left_arrow);
+
+if(current_page<=3 && ((+current_page +3) <= number_of_pages)){
+  for (var i = 1; i <= 3 && (i < number_of_pages); i++) {
+    pagination_item_class='';
+    if(current_page == i && current_page != number_of_pages){
+      pagination_item_class='active'
+    }
+    pagination_item = document.createElement('div');
+    pagination_item.setAttribute('data-value', i);
+    pagination_item.className = 'pagination_item '+pagination_item_class;
+    pagination_item.innerHTML = i;
+    pagination_div.append(pagination_item);
+  }
+}
+
+if (current_page>3 && current_page<=number_of_pages-3){
+
+  let pagination_item = document.createElement('div');
+  pagination_item.setAttribute('data-value', 1);
+
+  pagination_item_class='';
+  if(current_page == i){
+    pagination_item_class='active'
+  }
+  pagination_item.className = 'pagination_item '+pagination_item_class;
+ pagination_item.innerHTML = 1;
+ pagination_div.append(pagination_item);
+ dots_item = document.createElement('div');
+ dots_item.className = 'pagination_item dots';
+ dots_item.innerHTML = '...';
+ pagination_div.append(dots_item);
+ pagination_div.append(dots_item);
+  pagination_item = document.createElement('div');
+  pagination_item.className = 'pagination_item active';
+  pagination_item.setAttribute('data-value', current_page);
+  pagination_item.innerHTML = current_page;
+  pagination_div.append(pagination_item);
+}
+
+if (current_page>number_of_pages-3){
+
+
+  if(number_of_pages-3 >=0){
+    let pagination_item = document.createElement('div');
+    pagination_item.className = 'pagination_item ';
+    pagination_item.setAttribute('data-value', 1);
+
+    pagination_item.innerHTML = 1;
+    pagination_div.append(pagination_item);
+    dots_item = document.createElement('div');
+    dots_item.className = 'pagination_item dots';
+    dots_item.innerHTML = '...';
+    pagination_div.append(dots_item);
+    for (var i = number_of_pages - 3; i < number_of_pages; i++) {
+      pagination_item = document.createElement('div');
+      pagination_item_class = '';
+      pagination_item.setAttribute('data-value', i + 1);
+
+      if (current_page == i + 1) {
+        pagination_item_class = 'active'
+      }
+      pagination_item.className = 'pagination_item ' + pagination_item_class;
+      pagination_item.innerHTML = i + 1;
+      pagination_div.append(pagination_item);
+    }
+  }else{
+    for (var i = 0; i < number_of_pages; i++) {
+      pagination_item = document.createElement('div');
+      pagination_item_class = '';
+      pagination_item.setAttribute('data-value', i + 1);
+
+      if (current_page == i + 1) {
+        pagination_item_class = 'active'
+      }
+      pagination_item.className = 'pagination_item ' + pagination_item_class;
+      pagination_item.innerHTML = i + 1;
+      pagination_div.append(pagination_item);
+    }
+  }
+}
+
+else if (number_of_pages>3){
+  dots_item = document.createElement('div');
+  dots_item.className = 'pagination_item dots';
+  dots_item.innerHTML = '...';
+  pagination_div.append(dots_item);
+  pagination_item = document.createElement('div');
+  pagination_item.className = 'pagination_item ';
+  pagination_item.setAttribute('data-value', number_of_pages);
+  pagination_item.innerHTML = number_of_pages;
+  pagination_div.append(pagination_item);
+}
+
+  if (number_of_pages == 1){
+    $('.pagination_div')[0].style.display="none";
+  }else{
+    $('.pagination_div')[0].style.display="flex";
+  }
+
+  //add right arrow
+  let right_arrow = document.createElement('div');
+  right_arrow_class ='';
+  right_arrow.setAttribute('data-value', 'right');
+  if(current_page >= number_of_pages){
+    right_arrow_class = 'hidden'
+  }
+  right_arrow.className = 'pagination_item '+right_arrow_class;
+  right_arrow.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+  pagination_div.append(right_arrow);
+  pagination_handler();
+}
+
+function handle_clear_tab(tab_name) {
+  let myStorage = window.localStorage;
+  if (tab_name != 'clear') {
+    myStorage.removeItem(tab_name);
+
+  }
+   else {
+    myStorage.removeItem('subject');
+    myStorage.removeItem('topics');
+    myStorage.removeItem('level');
+    myStorage.removeItem('type');
+
+    myStorage.removeItem('search_query');
+
+    $('.search_input').val('');
+    remove_search_from_url();
+
+  }
+
+  if ( (!myStorage.getItem('subject')) && (!myStorage.getItem('topics')) && (!myStorage.getItem('level')) && (!myStorage.getItem('search_query')) ){
+    get_org_programs_v2();
+
+  }
+
+  if(tab_name = 'search_query'){
+    $('.search_input').val('');
+    remove_search_from_url();
+    }
+
+  clear_results();
+  fetch_course_discovery_data()
+}
+
+function clear_meta() {
+  $('#results_text').html('')
+  $('#filter_tabs > .filter_tab').remove();
+  $('.pagination_div > .pagination_item').remove();
+}
+
+function pagination_handler(){
+  $('.pagination_item:not(.active)').each(function(index) {
+    $(this).on("click", function() {
+      let pagination_item_value = $(this).data('value');
+      let myStorage = window.localStorage;
+      let current_page =  myStorage.getItem('page') || 1;
+      if(pagination_item_value=='left'){
+        myStorage.setItem('page', +current_page - 1);
+      }else if (pagination_item_value=='right'){
+        myStorage.setItem('page', +current_page + 1);
+
+      }else{
+        myStorage.setItem('page', pagination_item_value);
+      }
+      clear_results();
+      fetch_course_discovery_data()
+    });
+  })
+}
+
+
+function get_org_programs_v2(){
+  if(CatalogV2Settings.show_programs !=1){
+    return false;
+  }
+
+  const org_programs_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/org-programs/';
+  $.ajax({
+    type: 'get',
+    url: org_programs_url,
+    success: function(data) {
+      let myStorage = window.localStorage;
+      if(data.length ==undefined){
+        number_of_programs = 0;
+      }else{
+        number_of_programs = data.length;
+      }
+      myStorage.setItem('number_of_programs', number_of_programs);
+      if(data.length !=undefined){
+        add_program_filter_v2();
+        if(data.length){
+          data.forEach (program => {
+            fetch_program_meta_v2(program)
+          })
+        }
+      }
+    }
+  });
+}
+
+function add_type_filter(){
+  const org_programs_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/org-programs/';
+  $.ajax({
+    type: 'get',
+    url: org_programs_url,
+    success: function(data) {
+      let myStorage = window.localStorage;
+      // myStorage.setItem('number_of_programs', data.length);
+        add_program_filter_v2();
+    }
+  });
+}
+
+
+function fetch_program_meta_v2(program){
+  const program_meta = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/program-meta/';
+  $.ajax({
+    type: 'get',
+    url: program_meta,
+    data: {
+      program_slug: program.item_id,
+    },
+    success: function(data) {
+      populate_program_v2(data, program.name)
+    }
+  });
+}
+
+function populate_program_v2(data,name){
+  const courses_grid = document.querySelector('.resuts_div');
+  var program_box = document.createElement('div');
+  program_box.className = 'course-rec-3-wide search_section_box';
+  let display_name = name;
+  if (display_name.length > 47) {
+    display_name = trim_string(display_name);
+  }
+
+  let course_name = display_name;
+  let course_name_short = display_name;
+  //
+  if (course_name.length > 45) {
+    var maxLength = 45 // maximum number of characters to extract
+    var trimmedString = course_name.substr(0, maxLength);
+    course_name = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...'
+  }
+
+  if (course_name_short.length > 20) {
+    var maxLength = 20 // maximum number of characters to extract
+    var trimmedString = course_name_short.substr(0, maxLength);
+    course_name_short = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...'
+  }
+  let description =''
+  if(data.description){
+    description = data.description.replace(/<\/?[^>]+(>|$)/g, "");
+  }
+  let description_tablet =description;
+  let description_mobile = description;
+  //
+  if (description.length > 140) {
+    var maxLength = 140 // maximum number of characters to extract
+    var trimmedString = description.substr(0, maxLength);
+    description = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...'
+  }
+  if (description_tablet.length > 80) {
+    var maxLength = 80 // maximum number of characters to extract
+    var trimmedString = description_tablet.substr(0, maxLength);
+    description_tablet = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...'
+  }
+  if (description_mobile.length > 50) {
+    var maxLength = 50 // maximum number of characters to extract
+    var trimmedString = description_mobile.substr(0, maxLength);
+    description_mobile = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + '...'
+  }
+  //
+  // let topic='';
+  // if(data.topics){
+  //   topic = data.topics[0];
+  // }
+
+
+  let duration_display ="flex"
+  if (!data.duration){
+    duration_display ="none"
+  }
+
+  let level_display ="flex"
+  if (!data.level){
+    level_display ="none"
+  }
+
+  let features_display ="block"
+  if((!data.duration) && (!data.level)){
+    features_display ="none"
+  }
+
+  let slug =data.item_slug;
+  if (!slug){
+    slug = '#';
+  }
+
+  program_box.innerHTML = `<a href="`+CatalogV2Settings.home_url + "/programs/"+slug+` " class="course_link_wide w-inline-block search_section_course">
+  <div class="course-header-rec-3-wide">
+  <div style="opacity: 0;" class="overlay">
+  <div class="div-block-45"></div>
+  </div><img onerror="this.style.visibility='hidden'" src="` + CatalogV2Settings.lms_url + data.card_image + `" height="30" alt="" class="image-34-wide">
+  <div class="unit_type_div w-clearfix"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/course_icon.png" loading="lazy" alt="" class="type_img">
+  <div class="text-block-52">Program</div>
+  </div>
+  </div>
+  <div class="course-body-4-wide">
+  <div class="unit-wide-header-holder">
+  <div class="text-block-39 wide">` + display_name + `</div>
+  <div class="text-block-39 wide mobile">` + course_name + `<br></div>
+  <div class="text-block-39 wide mobile_short">` + course_name_short + `<br></div>
+  <div class="course_l pm text-block-45 wide">`+''+`</div>
+  <div class="unit-wide-description">` + description + `</div>
+  <div class="unit-wide-description tablet">` + description_tablet + `</div>
+  <div class="unit-wide-description mobile">` + description_mobile + `</div>
+  </div>
+  <div class="line4 n t" style="display:`+features_display+`"></div>
+  <div class="course-features" style="display:`+features_display+`">
+  <div class="div-block-30 first_row wide">
+  <div class="div-block-31 wide" style="display:`+level_display+`">
+  <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/volume.png" alt="" class="img-trg-4"></div>
+  <div class="features_block-2">
+  <div class="features-title-5">` + data.level + `</div>
+  </div>
+  </div>
+  <div class="div-block-31 wide" style="display:`+duration_display+`">
+  <div class="faq-wrap-3"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/clock.png" alt="" class="img-trg-4"></div>
+  <div class="features_block-2">
+  <div class="features-title-5">`+ data.duration +`</div>
+  </div>
+  </div>
+  <!-- <div class="div-block-31 wide">
+  <div class="faq-wrap-3 top_c"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/checked.png" alt="" class="img-trg-4"></div>
+  <div class="features_block-2">
+  <div class="features-title-5">0.28 pts</div>
+  </div>
+  </div> -->
+  </div>
+  </div>
+  </div>
+  </a>`;
+
+  courses_grid.append(program_box)
+
+}
+
+function add_program_filter_v2(){
+  let filter_options_class = '';
+  let myStorage = window.localStorage;
+  if(!$('.filter_row.filter_type')[0]){
+
+  if(myStorage.getItem('type')){
+    filter_options_class = 'active';
+  }
+
+  const filter_section = document.querySelector('.col_1');
+  let filter = document.createElement('div');
+  filter.className = 'filter_option filter_type';
+  filter.innerHTML = `<div data-name="` + 'type' + `" class="filter_row filter_type">
+  <div class="text-block-47">` + 'Type' + `</div><img src="`+CatalogV2Settings.theme_uri+`/inc/images/delete.png" loading="lazy" alt="" data-name="` + 'type' + `" class="dash_icon inactive"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/plus.png" loading="lazy" alt="" data-name="` + "type" + `" class="plus_icon active">
+  </div>
+  <div data-name=` + 'type' + ` class="filter_options `+filter_options_class+` ` + ' type' + `">
+  <div class="f_search">
+  <div id="form" class="form-block filter home ">
+  <form id="email-form" class="form_` + 'type' + `" name="email-form" class="form-2 filter home">
+  <div class="div-block-44 filter home"><input type="text" class="filter_search type_search_filter w-input" maxlength="256" data-name="`+'type'+`" placeholder="Search by ` + 'Type' + `">
+  <a href="" class="link-block-2 w-inline-block search_a"><img src="`+CatalogV2Settings.theme_uri+`/inc/images/search_icon.png" alt="" class="image-33"></a>
+  </div>
+  </form>
+  </div>
+  </div>
+  </div>`;
+
+
+  filter_section.append(filter);
+
+
+  const form_subject = document.querySelector('.form_' + 'type');
+  data = {
+    Course: myStorage.getItem('number_of_courses'),
+    Program: myStorage.getItem('number_of_programs'),
+  }
+  var keys = Object.keys(data);
+  let checkbox_attribute = [];
+  for (let [key, value] of Object.entries(data)) {
+    checkbox_attribute[value] = '';
+    if (myStorage.getItem('type') == key) {
+      checkbox_attribute[value] = 'checked';
+    }
+    let disabled ='';
+    if(value==0){
+      disabled = 'disabled'
+    }
+    let check_w_option = document.createElement('div');
+    check_w_option.className = 'check_w_options '+'type';
+    check_w_option.innerHTML = `<div class="radio_in">
+    <label class="filter_checkbox w-radio">
+    <input type="radio" data-name="` + 'type' + `" name=` + 'type' + ` value='` + key + `' `+disabled+` class="-form radioinput checkbox w-radio-input type-radio " ` + checkbox_attribute[value] + `>
+    <span class="radio-button-label -label" for="radio">` + key + ` (` + value + `)</span></label></div>`
+    form_subject.append(check_w_option);
+}
+add_type_filter_animation()
+}
+}
+
+function add_type_filter_animation(){
+    $('.filter_type').on("click", function() {
+      let filter_options = $('.filter_options[data-name="' + $(this).data('name') + '"]');
+      let plus_icon = $('.plus_icon[data-name="' + $(this).data('name') + '"]');
+      let dash_icon = $('.dash_icon[data-name="' + $(this).data('name') + '"]');
+      if (filter_options[0].style.display == "block") {
+        filter_options[0].style.display = "none";
+        plus_icon[0].style.display = "block";
+        dash_icon[0].style.display = "none";
+      } else {
+        filter_options[0].style.display = "block";
+        plus_icon[0].style.display = "none";
+        dash_icon[0].style.display = "block";
+      }
+    });
+
+
+    $('.type_search_filter').on('keyup', delayEventFire(function(e) {
+      let filter_input = $(this).val();
+      let filter_type = $(this).data('name');
+      let radio_boxes = $('.check_w_options.'+filter_type);
+      let radio_boxes_label = $('.check_w_options.'+filter_type).find('.-label');
+
+      $(radio_boxes_label).each(function(i, radio_box_label) {
+        if(radio_box_label.innerHTML.toUpperCase().includes(filter_input.toUpperCase())){
+          radio_boxes[i].style.display="block";
+        }else{
+          radio_boxes[i].style.display="none";
+        }
+        })
+    }, 700));
+
+
+
+    $('.type-radio').each(function(i, radio_input) {
+      $(this).on('change', delayEventFire(function(e) {
+
+          let radio_option = $(this).data('name');
+          let radio_value = $(this).val();
+
+          let myStorage = window.localStorage;
+          if(radio_value =='Program'){
+            clear_results();
+            myStorage.setItem('number_of_courses', 0);
+            myStorage.setItem('type', 'Program');
+            get_org_programs_v2();
+            populate_type_meta();
+
+          }else if (radio_value =='Course') {
+            clear_results();
+            // myStorage.setItem('number_of_programs', 0);
+            myStorage.setItem('type', 'Course');
+            fetch_course_discovery_data();
+            add_type_filter();
+          }
+      }, 700));
+    });
+
+
+
+
+}
+
+function update_results_text(){
+  let myStorage = window.localStorage;
+  let number_of_courses = myStorage.getItem('number_of_courses')
+  let number_of_programs = myStorage.getItem('number_of_programs')
+  if (myStorage.getItem('type')=='Course'){
+    number_of_programs = 0;
+  }
+
+  let total_items = (+number_of_courses) + (+number_of_programs)
+  $('#results_text').html('Showing ' + total_items + ' result' + (total_items == 1 ? "" : "s"))
+}
+
+$(document).ajaxStop(function () {
+  update_results_text();
+});
+
+
+function fetch_program_discovery_data_v2(){
+  search_parameters = get_search_parameters();
+  const program_discovery_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/program-discovery/';
+  $.ajax({
+    type: 'get',
+    url: program_discovery_url,
+    data: {
+      search_string: search_parameters.search_query
+    },
+    success: function(data) {
+      let myStorage = window.localStorage;
+      if(data.length ==undefined){
+        number_of_programs = 0;
+      }else{
+        number_of_programs = data.length;
+      }
+      myStorage.setItem('number_of_programs', number_of_programs);
+
+      if(data.length != undefined){
+        populate_type_meta();
+        add_program_filter_v2();
+        data.forEach (program => {
+          fetch_program_meta_v2(program)
+        })
+      }
+
+    }
+  });
+}
+
+function populate_type_meta(){
+  let myStorage = window.localStorage;
+  if (myStorage.getItem('type')){
+    let type_tabs = $(".filter_tab[data-name='type']");
+    type_tabs.remove();
+
+
+    let value = myStorage.getItem('type');
+    let filter_tab = document.createElement('div');
+    filter_tab.className = 'filter_tab';
+    filter_tab.setAttribute('data-name', 'type');
+
+    filter_tab.innerHTML = `<div class="tab_text">` + value + `</div>
+    <div class="x_icon"></div>`
+    $('#filter_tabs')[0].prepend(filter_tab);
+
+    //
+
+    let has_clear_tab = false;
+    $('.filter_tab').each(function(i, filter_tab) {
+        let tab_type = $(filter_tab).data('name');
+        if (tab_type == 'clear'){
+          has_clear_tab = true;
+        }
+    });
+
+    if(!has_clear_tab){
+      let filter_tab = document.createElement('div');
+      filter_tab.className = 'filter_tab';
+      filter_tab.setAttribute('data-name', 'clear');
+
+      filter_tab.innerHTML = `<div class="tab_text">` + 'Clear All' + `</div>`
+      $('#filter_tabs')[0].append(filter_tab);
+    }
+
+    $('.filter_tab').each(function(i, radio_input) {
+
+      $(this).on('click', delayEventFire(function(e) {
+        let tab_name = $(this).data('name');
+        handle_clear_tab(tab_name);
+      }, 1));
+    });
+
+
+
+
+  }else {
+    return false;
+  }
+
+}
+
+function set_search_query(){
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var page = url.searchParams.get("i");
+  var search_query = url.searchParams.get("q");
+  if(search_query){
+    let myStorage = window.localStorage;
+    myStorage.setItem('search_query', search_query);
+
+    if($('.header_search_input').length>0){
+      $('.header_search_input').val(search_query);
+    }
+
+  }
+}
+
+
+function remove_search_from_url(){
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  url.searchParams.delete("q");
+  if($('.header_search_input').length>0){
+    $('.header_search_input').val('');
+  }
+}

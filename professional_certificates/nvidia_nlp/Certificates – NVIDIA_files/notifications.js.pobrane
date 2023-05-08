@@ -1,0 +1,155 @@
+$ = jQuery;
+
+$(document).ready(function() {
+  if ($('.bel_btn')[0]) {
+    //on bell click
+    $('.bel_btn').click(function() {
+      handle_bell_click();
+    });
+
+    $('.bel_btn').click(function(event) {
+      event.stopPropagation();
+    });
+    populate_notifications_box();
+
+  }
+
+})
+
+function handle_bell_click() {
+
+  //show/hide popup
+  if ($('.notification_box')[0].style.display == 'block') {
+    $('.notification_box')[0].style.display = 'none';
+  } else {
+    $('.notification_box')[0].style.display = 'block';
+  }
+  $(window).click(function() {
+    if ($('.notification_box')[0].style.display == "block") {
+      $('.notification_box')[0].style.display = "none";
+    }
+  });
+  $('.notification_box').click(function(event) {
+    event.stopPropagation();
+  });
+
+  //hide unread icon
+  if($('.not_dot')[0].style.display=='block'){
+    $('.not_dot')[0].style.display='none'
+  }
+
+  //handle unread status
+  $('.notification_row[data-status="Unread"]').each(function(index) {
+    const set_notifications_status_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/set-notification-status/';
+    $.ajax({
+      type: 'get',
+      url: set_notifications_status_url,
+      data: {
+        id: $(this).data("id"),
+      },
+      success: function(data) {
+        console.log(data);
+      }
+    });
+  });
+
+
+}
+
+function populate_notifications_box(){
+  const user_notifications_url = CatalogV2Settings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/user-notifications/';
+  $.ajax({
+    type: 'get',
+    url: user_notifications_url,
+    success: function(data) {
+      if(data['results'].length>0){
+      let has_unread = false;
+      $(data['results']).each(function(index) {
+        add_notification_row($(this));
+        if($(this)[0]['status']=='Unread'){
+          has_unread=true
+        }
+      });
+      add_show_more_notifications();
+      if(has_unread){
+        show_unread_icon();
+      }
+      }
+      else{
+        show_no_notifications();
+      }
+    }
+  });
+}
+
+
+function add_notification_row(notification){
+  let notification_row = document.createElement('div');
+  notification_row.className = 'notification_row';
+  notification_row.setAttribute('data-id', notification[0]['id']);
+  notification_row.setAttribute('data-status', notification[0]['status']);
+  let temp_div = document.createElement("div");
+  temp_div.innerHTML = notification[0]['message_title'];
+  let notifcation_title = temp_div.innerText;
+  let date_created = new Date(notification[0]['created_at']);
+  notification_row.innerHTML=`<img class="not_image" src="`+NotificationsSettings.theme_uri+`/inc/images/information.png" alt="">
+                      <div class="not_text">
+                        <div class="not_title">
+                          <span class="not_item">`+notification[0]['username']+`</span> wrote
+                          "`+notifcation_title+`"
+                        </div>
+                        <div class="not_date">
+                          `+timeSince(date_created)+` ago
+                        </div>
+                      </div>`;
+  $('.menu-options-div.not')[0].append(notification_row);
+}
+
+function show_unread_icon(){
+  $('.not_dot')[0].style.display='block';
+}
+
+function add_show_more_notifications(){
+  let see_all_notifications = document.createElement('a');
+  $(see_all_notifications).attr("href", CatalogV2Settings.home_url+'/notifications')
+  see_all_notifications.className = 'info not bottom';
+  see_all_notifications.innerHTML = `See all notifications`;
+  $('.notification_box')[0].append(see_all_notifications);
+
+}
+
+function show_no_notifications(){
+  let not_notifications = document.createElement('div');
+  not_notifications.className = 'text not';
+  not_notifications.innerHTML = `<div class="title mt not">NO NOTIFICATIONS</div>
+  <span id="no_not_text">We'll let you know when there is an update</span>`
+
+
+  $('.menu-options-div.not')[0].append(not_notifications);
+
+}
+
+function timeSince(date) {
+  let seconds = Math.floor((new Date() - date) / 1000);
+  let interval = seconds / 31536000;
+  if (interval > 1) {
+    return Math.floor(interval) + " year"+( Math.floor(interval) == 1 ? "" : "s");
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " month"+( Math.floor(interval) == 1 ? "" : "s");
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " day" +( Math.floor(interval) == 1 ? "" : "s");
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hour"+( Math.floor(interval) == 1 ? "" : "s");
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minute"+( Math.floor(interval) == 1 ? "" : "s");
+  }
+  return Math.floor(seconds) + " second"+( Math.floor(interval) == 1 ? "" : "s");
+}

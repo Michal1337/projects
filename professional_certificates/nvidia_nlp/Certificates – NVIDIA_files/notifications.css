@@ -1,0 +1,153 @@
+.bel_btn{
+  cursor: pointer;
+  position: relative;
+  padding:0 !important;
+
+}
+
+.notification_box{
+  display: none;
+position: absolute;
+top: 40px;
+padding-top: 0;
+right: 0;
+background: #022a4d;
+width: 330px;
+cursor: auto;
+box-shadow: 0 4px 7px 0 rgb(0 0 0 / 76%);
+}
+
+.text.not{
+  width: 100%;
+  text-align: center;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.menu-options-div.not{
+  display: block;
+  /* padding-top:17px; */
+  padding-bottom:17px;
+}
+
+.title.mt.not{
+  margin-bottom:17px;
+  margin-top:17px;
+}
+
+
+#no_not_text{
+  font-size: 14px;
+}
+
+.text.h_not{
+  margin-left:0;
+}
+
+.info.not, .menu-options-div.not{
+  padding:17px;
+}
+
+.menu-options-div.not{
+  padding-top:0;
+}
+
+.menu-options-div.not:hover{
+  background: inherit;
+}
+
+.not_dot{
+  border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    background: #be3341;
+    top: -6px;
+    right: -6px;
+    display: none;
+}
+
+.not_image{
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+
+.notification_row{
+  display: flex;
+  align-items: flex-start;
+}
+
+.not_text{
+  margin-left: 17px;
+}
+
+.not_date{
+  margin-top:10px;
+  font-size: 12px;
+}
+
+.not_item{
+  font-weight: 600;
+  color: #d2e5f0;
+}
+
+.not_title{
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.notification_row{
+  margin-top:17px;
+}
+
+.notification_row.last_row{
+  margin-bottom:0;
+}
+
+.info.not.bottom{
+  border-bottom:none;
+  border-top: 1px solid #227aae;
+  display: block;
+  text-align: center;
+}
+
+.menu_holder{
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 991px) {
+  .menu_holder{
+    height:69.75px;
+  }
+  .bel_btn{
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+  .notification_box{
+    top:50px;
+  }
+  .not_text{
+    text-align: left;
+  }
+  .menu-options{
+    top: 67px !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .notification_box{
+    width: 250px;
+    right: calc(50% - 40px) !important
+  }
+}
+
+.info.not.bottom{
+  color: #bbd7e7;
+  text-decoration: none;
+}
+
+.info.not.bottom:hover{
+  color: #d2e5f0;
+}

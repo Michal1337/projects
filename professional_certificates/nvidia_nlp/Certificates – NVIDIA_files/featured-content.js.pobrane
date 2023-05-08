@@ -1,0 +1,419 @@
+$ = jQuery;
+let fc_storage = window.localStorage;
+
+const fc_pageAccessedByReload = (
+  (window.performance.navigation && window.performance.navigation.type === 1) ||
+  window.performance
+  .getEntriesByType('navigation')
+  .map((nav) => nav.type)
+  .includes('reload')
+);
+
+if (fc_pageAccessedByReload) {
+  fc_storage.clear()
+}
+
+window.onunload = window.onbeforeunload = function(event) {
+  fc_storage.clear()
+};
+
+$(document).ready(function() {
+  if($('.featured-courses.w-slider.ibl').length>0){
+
+    let fc_storage = window.localStorage;
+    let page = 1;
+    fc_storage.setItem('desktop_page', page);
+    fc_storage.setItem('mobile_page', page);
+    fetch_featured_courses(page);
+  }
+
+});
+
+function render_fc_slider(courses) {
+  if (courses['results'].length > 0) {
+    render_fc_desktop_slider(courses['results']);
+    render_fc_mobile_slider(courses['results']);
+  }
+}
+
+function tablet_slider_animations() {
+  let tablet_sliders = document.querySelectorAll('.tablet_slider');
+  for (var i = 0; i < tablet_sliders.length; i++) {
+    tablet_sliders[i].addEventListener('touchstart', start, false);
+    tablet_sliders[i].addEventListener('touchmove', move, false);
+    tablet_sliders[i].addEventListener('touchend', end, false);
+    tablet_sliders[i].slider_id = tablet_sliders[i].id
+  }
+}
+
+function fc_start(evt) {
+  var touches = evt.touches;
+  if (touches && touches.length > 1) {
+    return;
+  }
+  active = true;
+  if (touches) {
+    useTouch = true;
+    startX = touches[0].clientX;
+  } else {
+    startX = evt.clientX;
+  }
+  lastX = startX;
+}
+
+
+function fc_move(evt) {
+  if (!active) {
+    return;
+  }
+
+  if (useTouch && evt.type === 'mousemove') {
+    evt.preventDefault();
+    evt.stopPropagation();
+    return;
+  }
+
+  var touches = evt.touches;
+  var x = touches ? touches[0].clientX : evt.clientX;
+  var velocityX = x - lastX;
+  lastX = x;
+  let direction = '';
+  if (velocityX > 0) {
+    direction = 'left';
+  } else {
+    direction = 'right';
+  }
+
+  let current_page = fc_storage.getItem('mobile_page')
+  let number_of_pages = Math.ceil(fc_storage.getItem('total_courses') / 3);
+  let disable_movement = false;
+  if (current_page == 1 && direction == 'left') {
+    disable_movement = true;
+  }
+
+  if (current_page == fc_storage.getItem('total_courses') && direction == 'right') {
+    disable_movement = true;
+  }
+
+
+
+  if (!disable_movement) {
+    fc_arrow_click(direction)
+  }
+  fc_cancel();
+}
+
+function fc_end(evt) {
+  if (!active) {
+    return;
+  }
+  active = false;
+
+  if (useTouch && evt.type === 'mouseup') {
+    evt.preventDefault();
+    evt.stopPropagation();
+    useTouch = false;
+    return;
+  }
+}
+
+function fc_cancel() {
+  active = false;
+}
+
+
+function fetch_featured_courses(page) {
+  let number_of_pages = Math.ceil(fc_storage.getItem('total_courses') / 3);
+  if ($('.div-block-54.fc-' + page).length == 0 && (page <= number_of_pages || number_of_pages <= 0)) {
+    const courses_url = FTSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/course-discovery/';
+    let data = {
+      page: page,
+      promotion:'featured',
+      page_size: 3,
+
+    };
+    $.ajax({
+      type: 'get',
+      url: courses_url,
+      data: data,
+      success: function(data) {
+        fc_storage.setItem('total_courses', data['total']);
+        render_fc_slider(data);
+      },
+      complete: function(data) {
+        setTimeout(() => {
+          move_fc_slider();
+        }, 20);
+      }
+    });
+
+  }
+  else {
+    move_fc_slider()
+  }
+  set_fc_mobile_animation();
+
+}
+
+
+function render_fc_desktop_slider(courses) {
+  let current_page = fc_storage.getItem('desktop_page')
+  let mask_desktop = document.querySelector('.featured-courses.desktop.w-slider-mask');
+  let slide_desktop = document.createElement('div');
+  slide_desktop.className = 'w-slide'
+  slide_desktop.innerHTML = `<div class="featured-courses div-block-54 desktop al-l h  fc-` + current_page + `"></div>`;
+  mask_desktop.append(slide_desktop);
+  let desktop_container = document.querySelector('.featured-courses.div-block-54.desktop.al-l.h.fc-' + current_page);
+  // //populate slides
+  $(courses).each(function(index) {
+    populate_fc_slide($(this)[0], desktop_container);
+  });
+}
+//
+function render_fc_mobile_slider(courses) {
+  let current_page = fc_storage.getItem('desktop_page')
+  let mask_mobile = document.querySelector('.featured-courses.mobile.w-slider-mask');
+  $(courses).each(function(index) {
+    let slide_mobile = document.createElement('div');
+    slide_mobile.className = 'slide w-slide'
+    slide_mobile.innerHTML = `<div class="featured-courses div-block-54 mobile al-l h  fc-` + current_page + ` i-` + index + `"></div>`;
+    mask_mobile.append(slide_mobile);
+    let mobile_container = document.querySelector('.featured-courses.div-block-54.mobile.al-l.h.fc-' + current_page  + '.i-' + index);
+    populate_fc_slide($(this)[0], mobile_container);
+  });
+}
+
+function populate_fc_slide(course, slide) {
+  fetch_fc_metadata(course['_id'],slide);
+}
+
+function format_event_date(string_date) {
+  date_time = string_date.split("T")[0];
+  date_time = new Date(date_time);
+  var options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  };
+  return date_time.toLocaleDateString("en-US", options);
+}
+
+function render_fc_slider_arrows(events) {
+  let current_page = fc_storage.getItem('desktop_page')
+  let number_of_pages = Math.ceil(fc_storage.getItem('total_courses') / 3);
+  if (current_page < number_of_pages) {
+    show_fc_right_arrow();
+  }
+  if (current_page == number_of_pages) {
+    hide_fc_right_arrow();
+  }
+
+  if (current_page > 1 && number_of_pages > 1) {
+    show_fc_left_arrow();
+  }
+
+  if (current_page == 1) {
+    hide_fc_left_arrow();
+  }
+
+}
+
+function show_fc_right_arrow() {
+  $('.fc_right_arrow')[0].style.display = 'flex';
+}
+
+function show_fc_left_arrow() {
+  $('.fc_left_arrow')[0].style.display = 'flex';
+}
+
+function hide_fc_right_arrow() {
+  $('.fc_right_arrow')[0].style.display = 'none';
+}
+
+function hide_fc_left_arrow() {
+  $('.fc_left_arrow')[0].style.display = 'none';
+}
+
+function fc_arrow_click(direction) {
+  let current_page = fc_storage.getItem('desktop_page');
+  let mobile_page = fc_storage.getItem('mobile_page');
+
+  if (direction == 'right') {
+    page = +current_page + 1
+    mobile_page = +mobile_page + 1
+  } else {
+    page = +current_page - 1
+    mobile_page = +mobile_page - 1
+  }
+
+  let number_of_pages = Math.ceil(fc_storage.getItem('total_courses') / 3);
+  if (page > number_of_pages) {
+    page = number_of_pages;
+  }
+  if (page < 1) {
+    page = 1;
+  }
+
+  fc_storage.setItem('desktop_page', page);
+  fc_storage.setItem('mobile_page', mobile_page);
+
+  fetch_featured_courses(page);
+
+}
+
+function move_fc_slider() {
+  //get desktop slides
+  //get mobile slides
+  let current_page = fc_storage.getItem('desktop_page')
+  let mobile_current_page = fc_storage.getItem('mobile_page');
+
+  offset = calculate_fc_offset(current_page);
+  $(".featured-courses.desktop.w-slider-mask .w-slide").each(function() {
+    $(this)[0].style.transition = "transform 500ms ease 0s";
+    $(this)[0].style.transform = "translateX(" + offset + "%)";
+  });
+  mobile_offset = calculate_fc_offset(mobile_current_page);
+  $(".featured-courses.mobile.w-slider-mask .w-slide").each(function() {
+    $(this)[0].style.transition = "transform 500ms ease 0s";
+    $(this)[0].style.transform = "translateX(" + mobile_offset + "%)";
+  });
+  render_fc_slider_arrows();
+}
+
+function calculate_fc_offset(page) {
+  if (page == 1) {
+    offset = 0
+  } else {
+    offset = -(page - 1) * 100
+  }
+  return offset;
+}
+
+function set_fc_mobile_animation() {
+  let mobile_slider = document.querySelector('.featured-courses.mobile.w-slider-mask');
+  mobile_slider.addEventListener('touchstart', fc_start, false);
+  mobile_slider.addEventListener('touchmove', fc_move, false);
+  mobile_slider.addEventListener('touchend', fc_end, false);
+}
+
+function fetch_fc_metadata(course_id, slide){
+  const courses_metadata_url = FTSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/course-metadata/';
+  let data = {
+    'course_id': course_id,
+  };
+  $.ajax({
+    type: 'get',
+    url: courses_metadata_url,
+    data: data,
+    success: function(data) {
+      render_fc_box(data,slide);
+    },
+  });
+
+
+}
+
+
+// function fetch_course_price(data, slide){
+//   const courses_price_url = FTSettings.home_url + "/" + 'wp-json/ibl-nvidia-wp-theme/v1/course-price/';
+//   let course_price_data = {
+//     'course_id': data['course_key'],
+//   };
+//   $.ajax({
+//     type: 'get',
+//     url: courses_price_url,
+//     data: course_price_data,
+//     success: function(price_data) {
+//       render_fc_box(data,price_data,slide);
+//     },
+//   });
+//
+// }
+
+function render_fc_box(data,slide){
+  let tag ='';
+  if(data['tags']){
+    if ( data['tags'][0]){
+      tag = data['tags'][0]
+    }
+  }
+
+  let topic =''
+  if(data['topics']){
+    if ( data['topics'][0]){
+      topic = data['topics'][0]
+    }
+  }
+  let subject='';
+  if(data['subject']){
+    subject = data['subject']
+  }
+
+  let about_page_link = FTSettings.home_url + "/courses/"+data['course_slug'];
+  let banner_image = FTSettings.lms_url +data['course_image_asset_path'];
+  let short_desc = format_featured_short_desc(data['short_description']);
+  let course_box = document.createElement('div');
+  course_box.className = 'course-rec-3 filterdiv0 pr f';
+  course_box.innerHTML =`<a href="`+about_page_link+`" class="course_link w-inline-block" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">
+                      <div class="course-header-rec-3">
+                        <div class="overlay">
+                          <div class="div-block-45"></div>
+                        </div>
+                        <img src="`+banner_image+`" height="30" alt="" class="image-34">
+                      </div>
+                      <div class="course-body-3">
+                                        <div class="name_title">
+                                          <div class="text-block-39">`+data['display_name']+`</div>
+
+                                        </div>
+                                        <div class="short_desc">
+                                        `+short_desc+`
+                                        </div>
+                                        <div class="line4 n"></div>
+                                        <div class="text-block-35 description-block-35"></div>
+
+                                        <div class="course-features">
+                                          <div class="div-block-30 first_row">
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="https://influxdbu.com/wp-content/themes/ibl-influx-wp-theme/inc/images/clock_icon.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">`+data['duration']+`</div>
+                                              </div>
+                                            </div>
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="https://influxdbu.com/wp-content/themes/ibl-influx-wp-theme/inc/images/level_icon.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">`+data['level']+`</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="div-block-30">
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="https://influxdbu.com/wp-content/themes/ibl-influx-wp-theme/inc/images/out_icon.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">Outline</div>
+                                              </div>
+                                            </div>
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="https://influxdbu.com/wp-content/themes/ibl-influx-wp-theme/inc/images/cert_icon.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">Certificate</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                    </a>`;
+  slide.append(course_box);
+}
+
+function format_featured_short_desc(short_description){
+  if (short_description.length > 100){
+    var maxLength = 100 // maximum number of characters to extract
+    var trimmedString = short_description.substr(0, maxLength);
+    trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+    return trimmedString + '...';
+  }else{
+    return short_description;
+  }
+}

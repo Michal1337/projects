@@ -1,0 +1,33 @@
+$(document).ready(function(){
+
+  const logged_in_menu = document.querySelector('.logged_in_menu');
+  const menu_options = document.querySelector('.menu-options');
+  const down_chevron = document.querySelector('.inh');
+
+  logged_in_menu.addEventListener("click", function(){
+
+    if(menu_options.style.display=="block"){
+      menu_options.style.display="none";
+      down_chevron.style.transform = 'rotate(0deg)';
+
+  }else{
+    menu_options.style.display="block";
+    down_chevron.style.transform = 'rotate(180deg)';
+  }
+
+  });
+
+
+  $(window).click(function() {
+    if(menu_options.style.display=="block"){
+      menu_options.style.display="none";
+      down_chevron.style.transform = 'rotate(0deg)';
+
+    }
+  });
+
+  $(logged_in_menu).click(function(event){
+    event.stopPropagation();
+  });
+
+});

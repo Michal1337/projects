@@ -1,0 +1,576 @@
+
+$(document).ready(function() {
+  let myStorage = window.localStorage;
+  const pageAccessedByReload = (
+    (window.performance.navigation && window.performance.navigation.type === 1) ||
+    window.performance
+    .getEntriesByType('navigation')
+    .map((nav) => nav.type)
+    .includes('reload')
+  );
+
+  if (pageAccessedByReload) {
+    myStorage.clear()
+  }
+
+  window.onunload = window.onbeforeunload = function(event) {
+    myStorage.clear()
+  };
+
+  if($('.courses_slider').length>0){
+    $('.courses_slider').each(function(index) {
+      let category = $(this).data('category');
+      populate_course_slider(category);
+    });
+  }
+
+
+});
+
+function populate_course_slider(category){
+  populate_category_filters(category);
+
+}
+
+function populate_category_filters(category){
+  // https://base.manager.griky.ibl.education/api/fast_catalog/sub_categories/?page_number=1&page_size=10&category__name=Data+Academy+Subscription
+  const subscription_category_url = CourseSliderSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/subscription-categories/';
+
+  $.ajax({
+    type: 'get',
+    url: subscription_category_url,
+    data: {
+      category_name: category,
+    },
+    success: function(data) {
+      initiate_slider(data);
+    }
+  });
+
+}
+
+
+function initiate_slider(data){
+  let default_subject='';
+  $(data['results']).each(function( index ) {
+    btn_active_class ='';
+    if(index ==0){
+      btn_active_class = 'active';
+      default_subject = $(this)[0]['name'];
+      default_counter = $(this)[0]['number_of_courses'];
+    }
+
+    //add subject tabs
+    let subject_tab = document.createElement('button');
+    subject_tab.setAttribute('data-name', $(this)[0]['name']);
+    subject_tab.setAttribute('data-count', $(this)[0]['number_of_courses']);
+
+    subject_tab.className = 'btn link '+btn_active_class;
+    subject_tab.innerHTML =  $(this)[0]['name'];
+    $('#myBtnContainer').append(subject_tab);
+
+    //add number of courses text
+    let course_counter = document.createElement('div');
+    course_counter.setAttribute('data-name', $(this)[0]['name']);
+    course_counter.className = 'counter_tech '+btn_active_class;
+    course_counter.innerHTML =  $(this)[0]['number_of_courses']+' Course'+ ($(this)[0]['number_of_courses'] == 1 ? "" : "s")+' in '+ $(this)[0]['name'];
+    $('#course_counter').append(course_counter);
+});
+  add_tab_handlers();
+  add_slider(default_subject, default_counter);
+}
+
+function add_tab_handlers(){
+  $('.btn.link').each(function(index) {
+    $(this).on("click", function() {
+      let tab_name = $(this).data('name');
+      let tab_counter = $(this).data('count');
+      let number_of_pages = Math.ceil(tab_counter/4);
+
+      $('.btn.link.active').removeClass('active');
+      $(this).addClass('active');
+      $('.counter_tech.active').removeClass('active');
+      $('.counter_tech[data-name="'+tab_name+'"]').addClass('active');
+      add_slider(tab_name, tab_counter);
+      display_arrows(encodeURI(tab_name), number_of_pages);
+    });
+  });
+}
+
+function add_slider(subject, counter){
+  let myStorage = window.localStorage;
+  if (myStorage.getItem(subject)===null){
+    page_number = 1;
+  }else{
+    page_number = myStorage.getItem(subject);
+  }
+  myStorage.setItem(subject+'_page', page_number);
+  myStorage.setItem(subject, page_number);
+  let number_of_pages = Math.ceil(counter/4);
+  let current_page = myStorage.getItem(subject)
+  let next_page = +current_page +1;
+  let previous_page = +current_page -1;
+  //if slider doesn't exist
+  if(!$('.data_academy_slider.w-slider[data-name="'+encodeURI(subject)+'"]')[0]){
+  var slider = document.createElement('div');
+  slider.className = 'data_academy_slider w-slider active desktop_slider';
+  slider.setAttribute('data-name', encodeURI(subject));
+  slider.innerHTML=`<div class="w-slider-mask desktop-mask" data-name=`+encodeURI(subject)+`>
+  </div>
+  <div class="left-arrow-4 w-slider-arrow-left course_slider_arrow" data-name=`+encodeURI(subject)+` data-number=`+previous_page+` data-direction='left'
+  onclick="arrow_click('`+ encodeURI(subject) +`', 'left', event)">
+
+  <img src="`+CourseSliderSettings.theme_uri+`/inc/images/back-6.png" alt="" class="image-6 left-arrow" data-name=`+encodeURI(subject)+`>
+  </div>
+  <div id="r_a2" class="right-arrow-3 w-slider-arrow-right course_slider_arrow" data-name=`+encodeURI(subject)+` data-number=`+next_page+` data-direction='right'
+      onclick="arrow_click('`+ encodeURI(subject) +`', 'right', event)">
+    <img src="`+CourseSliderSettings.theme_uri+`/inc/images/next-5.png" alt="" class="image-6 right-arrow" data-name=`+encodeURI(subject)+`>
+  </div>
+  `;
+  $('.container-4.courses_slider')[0].append(slider);
+
+
+  var mobile_slider = document.createElement('div');
+  mobile_slider.className = 'data_academy_slider w-slider active mobile_slider';
+  mobile_slider.setAttribute('data-name', encodeURI(subject));
+  mobile_slider.innerHTML=`<div class="w-slider-mask mobile-mask" data-name=`+encodeURI(subject)+`>
+  </div>
+  <div class="left-arrow-4 w-slider-arrow-left course_slider_arrow mobile_arrow" data-name=`+encodeURI(subject)+` data-number=`+previous_page+` data-direction='left'>
+  <img src="`+CourseSliderSettings.theme_uri+`/inc/images/back-6.png" alt="" class="image-6 left-arrow" data-name=`+encodeURI(subject)+`>
+  </div>
+  <div id="r_a2" class="right-arrow-3 w-slider-arrow-right course_slider_arrow mobile_arrow" data-name=`+encodeURI(subject)+` data-number=`+next_page+` data-direction='right'
+    onclick="arrow_click('`+ encodeURI(subject) +`', 'right', event)">
+    <img src="`+CourseSliderSettings.theme_uri+`/inc/images/next-5.png" alt="" class="image-6 right-arrow" data-name=`+encodeURI(subject)+`">
+  </div>
+  `;
+  $('.container-4.courses_slider')[0].append(mobile_slider);
+  handle_mobile_navigation(mobile_slider);
+
+  }
+
+  //remove active class and add it to the selected one
+  $('.data_academy_slider.w-slider.active').removeClass('active');
+  $('.data_academy_slider.w-slider[data-name="'+encodeURI(subject)+'"]').addClass('active');
+
+
+  //if slide doesn't exist, create
+  if(!$('.w-slide[data-subject-number="'+encodeURI(subject)+'-'+myStorage.getItem(subject+'_page')+'"]')[0]){
+  //populate desktop courses
+  create_slide(encodeURI(subject),myStorage.getItem(subject+'_page'),number_of_pages);
+}
+// handle_arrows(subject);
+}
+
+function show_right_arrow(subject){
+  $('.right-arrow').each(function(index) {
+    let arrow_subject = $(this).data("name");
+    if(subject == arrow_subject){
+      $(this)[0].style.display ='flex';
+    }
+
+  });
+
+
+  // $('.right-arrow')[0].style.display="flex";
+}
+
+function show_left_arrow(){
+  $('.left-arrow')[0].style.display="flex";
+}
+
+function hide_right_arrow(){
+  $('.right-arrow')[0].style.display="none";
+}
+
+function hide_left_arrow(){
+  $('.left-arrow')[0].style.display="none";
+}
+
+
+function handle_arrows(handle_subject){
+  let myStorage = window.localStorage;
+  handle_subject=encodeURI(handle_subject);
+  $('.course_slider_arrow[data-name="'+handle_subject+'"]').on("click", function() {
+
+
+          let direction = $(this).data("direction");
+          let subject = $(this).data("name");
+          let current_page = myStorage.getItem(decodeURI(subject));
+
+
+          if (direction == 'left'){
+            current_page = +current_page -1
+          }else{
+            current_page = +current_page +1
+          }
+          myStorage.setItem(decodeURI(subject), current_page);
+
+          let slide_subject_number = $(this).data("name")+'-'+current_page;
+          //if slide doesn't exist
+          let counter = $('.btn.link.active').data("count");
+          let number_of_pages = Math.ceil(counter/4);
+          let slide =   $('.w-slide[data-subject-number="'+slide_subject_number+'"]');
+          if( slide.length ==0){
+            create_slide($(this).data("name"), current_page, number_of_pages, 'right')
+          }else{
+            show_selected_slider($(this).data("name"), current_page, number_of_pages, direction);
+          }
+  })
+}
+
+function create_slide(subject, number, number_of_pages, direction){
+  create_desktop_slide(subject, number, number_of_pages, direction);
+  create_mobile_slide(subject, number, number_of_pages, direction);
+}
+
+
+ function show_selected_slider(subject, number, number_of_pages,direction){
+   let myStorage = window.localStorage;
+   $('.w-slide[data-subject="'+subject+'"]').each(function(index) {
+       // $(this)[0].style.display="none";
+       //  $(this).addClass("hide_element");
+       //  $(this).removeClass("show_element");
+   });
+   // $('.w-slide[data-subject-number="'+subject+'-'+number+'"]').removeClass("hide_element");
+   // $('.w-slide[data-subject-number="'+subject+'-'+number+'"]').addClass("show_element");
+   move_slider( $('.w-slide[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0],direction,'desktop')
+
+   let current_slide =   $('.w-slide.mobile-w_slide').data('current-slide');
+   let set_new_slide='';
+   if (direction=='left'){
+      set_new_slide = +current_slide -1
+   }else{
+     set_new_slide = +current_slide +1
+   }
+   $('.w-slide.mobile-w_slide[data-subject-number').each(function(index) {
+     $(this).data('current-slide',+set_new_slide);
+   });
+   move_slider( $('.w-slide.mobile-w_slide[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0],direction,'mobile')
+
+   display_arrows(subject,number_of_pages);
+ }
+
+
+ function display_arrows(subject,number_of_pages){
+   let myStorage = window.localStorage;
+   //hide/show arrows
+   let current_page = myStorage.getItem(decodeURI(subject));
+   let next_page = +current_page +1;
+   let previous_page = +current_page -1;
+
+
+   if(current_page < number_of_pages){
+     show_right_arrow(subject);
+   }else{
+     hide_right_arrow(subject);
+   }
+   if(number_of_pages > 1 && current_page >1){
+     show_left_arrow();
+   }else{
+     hide_left_arrow();
+   }
+ }
+
+ function fetch_course_metadata(course, subject, screen_size,index){
+   let myStorage = window.localStorage;
+   const course_metadata_url =CourseSliderSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/course-metadata/';
+   $.ajax({
+     type: 'get',
+     url: course_metadata_url,
+     data: {
+       course_id: course['course_id']
+     },
+
+     success: function(data) {
+       let display_name = trim_name(data['display_name']);
+       var course_box = document.createElement('div');
+       course_box.className = 'course-rec-3 filterdiv0 pr f';
+       course_box.innerHTML=`<a href="`+CourseSliderSettings.home_url+'/courses/'+``+data['course_slug']+`" class="course_link w-inline-block">
+         <div class="course-header-rec-3">
+           <div style="opacity:0" class="overlay">
+             <div class="div-block-45"></div>
+           </div><img src="`+CourseSliderSettings.lms_url+``+data['banner_image_asset_path']+`" height="30" alt="" class="image-34">
+         </div>
+         <div class="course-body-4">
+           <div class="text-block-39 course_l">`+display_name+`</div>
+           <div class="course-features">
+             <div class="div-block-30 first_row">
+               <div class="div-block-31 right">
+                 <div class="faq-wrap-3"><img src="`+CourseSliderSettings.theme_uri+`/inc/images/clock_1.png" alt="" class="img-trg-4"></div>
+                 <div class="features_block-2">
+                   <div class="features-title-5">`+data['duration']+`</div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </a>`;
+
+       if(screen_size=='desktop'){
+         $('.div-block-54.desktop-block-54.al-l.h[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0].append(course_box);
+       }else{
+         $('.div-block-54.mobile-block-54.al-l.h.i-'+index+'[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0].append(course_box);
+       }
+
+     }
+   });
+ }
+
+ function create_desktop_slide(subject, number, number_of_pages,direction){
+   let myStorage = window.localStorage;
+   myStorage.setItem(decodeURI(subject), number);
+   myStorage.setItem(subject+'_page', number);
+   const slider_courses_url = CourseSliderSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/slider-courses/';
+   $.ajax({
+     type: 'get',
+     url: slider_courses_url,
+     data: {
+       subject: decodeURI(subject),
+       page_size:4,
+       page_number:myStorage.getItem(subject+'_page')
+     },
+     success: function(data) {
+       //create slide
+       var slide = document.createElement('div');
+       slide.className = 'w-slide';
+       slide.setAttribute('data-subject-number', subject+'-'+myStorage.getItem(subject+'_page'));
+       slide.setAttribute('data-subject', subject);
+       slide.innerHTML=`<div class="div-block-54 desktop-block-54 al-l h" data-subject-number="`+subject+`-`+myStorage.getItem(subject+'_page')+`"></div>`
+       $('.w-slider-mask.desktop-mask[data-name="'+subject+'"]')[0].append(slide);
+
+       //populate courses
+       $(data['results']).each(function( index ) {
+         fetch_course_metadata($(this)[0], subject,'desktop');
+       })
+
+       display_arrows(subject,number_of_pages);
+       if(direction){
+         move_slider( $('.w-slide[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0],direction,'desktop')
+       }
+     }
+   });
+ }
+
+
+
+ function create_mobile_slide(subject, number, number_of_pages, direction){
+   let myStorage = window.localStorage;
+   myStorage.setItem(decodeURI(subject), number);
+
+   myStorage.setItem(subject+'_page', number);
+
+   const slider_courses_url = CourseSliderSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/slider-courses/';
+   $.ajax({
+     type: 'get',
+     url: slider_courses_url,
+     data: {
+       subject: decodeURI(subject),
+       page_size:4,
+       page_number:myStorage.getItem(subject+'_page')
+     },
+     success: function(data) {
+       //create slide
+       $(data['results']).each(function( index ) {
+         var mobile_slide = document.createElement('div');
+         mobile_slide.className = 'w-slide mobile-w_slide';
+         mobile_slide.setAttribute('data-subject-number', subject+'-'+myStorage.getItem(subject+'_page'));
+         mobile_slide.setAttribute('data-subject', subject);
+         mobile_slide.setAttribute('data-current-slide', 0);
+
+         mobile_slide.innerHTML=`<div class="div-block-54 mobile-block-54 al-l h i-`+index+`" data-subject-number="`+subject+`-`+myStorage.getItem(subject+'_page')+`"></div>`
+         $('.w-slider-mask.mobile-mask[data-name="'+subject+'"]')[0].append(mobile_slide);
+
+         //call metadata api
+         fetch_course_metadata($(this)[0],subject,'mobile',index);
+
+
+
+       })
+       display_arrows(subject,number_of_pages);
+       if(direction){
+
+         let current_slide =   $('.w-slide.mobile-w_slide').data('current-slide');
+         let set_new_slide='';
+         if (direction=='left'){
+            set_new_slide = +current_slide -1
+         }else{
+           set_new_slide = +current_slide +1
+         }
+         $('.w-slide.mobile-w_slide[data-subject-number').each(function(index) {
+           $(this).data('current-slide',+set_new_slide);
+         });
+         move_slider( $('.w-slide.mobile-w_slide[data-subject-number="'+subject+'-'+myStorage.getItem(subject+'_page')+'"]')[0],direction,'mobile')
+
+       }
+     }
+   });
+ }
+
+
+ function handle_mobile_navigation(slider){
+   slider.addEventListener('touchstart', start, false);
+   slider.addEventListener('touchmove', move, false);
+   slider.addEventListener('touchend', end, false);
+ }
+
+ function start(evt) {
+     var touches = evt.touches;
+     if (touches && touches.length > 1) {
+         return;
+     }
+
+     active = true;
+
+     if (touches) {
+         useTouch = true;
+         startX = touches[0].clientX;
+     } else {
+         startX = evt.clientX;
+     }
+
+     lastX = startX;
+ }
+
+ function move(evt) {
+
+     if (!active) {
+         return;
+     }
+
+     if (useTouch && evt.type === 'mousemove') {
+         evt.preventDefault();
+         evt.stopPropagation();
+         return;
+     }
+
+     var touches = evt.touches;
+
+     var x = touches ? touches[0].clientX : evt.clientX;
+     var velocityX = x - lastX;
+     lastX = x; // Allow swipes while pointer is down, but prevent them during text selection
+         let direction ='';
+         if (velocityX>0){
+           direction = 'left';
+         }else{
+           direction = 'right';
+         }
+
+
+         let subject = $(evt.currentTarget).data('name');
+         let w_slide_element = ($(evt.currentTarget).find('.w-slide'));
+         let current_slide = $(w_slide_element).data('current-slide');
+         let number_of_slides = $('.btn.link.active').data("count");
+         let can_move =true;
+         //disable left
+         if (current_slide ==0 & direction=='left'){
+           can_move = false;
+         }
+
+         //disable right
+         if (((current_slide +1) == number_of_slides) && direction=='right'){
+           can_move = false;
+         }
+
+
+         if(can_move){
+           arrow_click(subject, direction);
+         }
+           cancel();
+ }
+
+
+
+ function simulate_click(direction, target){
+
+}
+
+
+ function end(evt) {
+   // alert('fires in end');
+     if (!active) {
+         return;
+     }
+     // TODO: create slide end
+     active = false;
+
+     if (useTouch && evt.type === 'mouseup') {
+         evt.preventDefault();
+         evt.stopPropagation();
+         useTouch = false;
+         return;
+     }
+ }
+
+ function cancel() {
+     active = false;
+ }
+
+ function move_slider(element, direction, screen_size){
+  let siblings = $(element).parent().children();
+
+  let offset = $(siblings).data('offset');
+
+  if (!offset){
+    offset=0;
+  }
+  if(direction=='right'){
+    offset = +offset - 100;
+  }else if (direction=='left') {
+      offset = +offset + 100;
+  }
+    $(siblings).each(function(index) {
+      if(!($(this).hasClass( "mobile-w_slide" ))){
+        let counter = $('.btn.link.active').data("count");
+        let number_of_pages = Math.ceil(counter/4);
+        let max_offset = -(number_of_pages -1)*100;
+        if (offset < max_offset){
+          offset = max_offset
+        }
+      }
+      $(this)[0].style.transform="translateX("+offset+"%)";
+      $(this)[0].style.transition = "transform 500ms ease 0s";
+      $(this).data('offset',offset);
+    });
+ }
+
+ function trim_name(name){
+   var maxLength = 31
+   if (name.length > maxLength){
+     var trimmedString = name.substr(0, maxLength);
+     trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+     return trimmedString + '...';
+   }else{
+     return name;
+   }
+ }
+
+ function arrow_click(subject, direction){
+   let myStorage = window.localStorage;
+   let current_page = myStorage.getItem(decodeURI(subject));
+   if (direction == 'left'){
+     current_page = +current_page -1
+   }else{
+     current_page = +current_page +1
+   }
+   myStorage.setItem(decodeURI(subject), current_page);
+
+   //if slide doesn't exist
+   let counter = $('.btn.link.active').data("count");
+   let number_of_pages = Math.ceil(counter/4);
+   if (current_page > number_of_pages){
+     current_page = number_of_pages
+   }
+
+
+   let slide_subject_number = subject+'-'+current_page;
+   let slide =   $('.w-slide[data-subject-number="'+slide_subject_number+'"]');
+   let mobile_slide =   $('.w-slide.mobile[data-subject-number="'+slide_subject_number+'"]');
+   let slider_name = slide_subject_number;
+
+   if( slide.length ==0){
+     create_slide(subject, current_page, number_of_pages, 'right')
+   }else{
+     show_selected_slider(subject, current_page, number_of_pages, direction);
+
+   }
+ }

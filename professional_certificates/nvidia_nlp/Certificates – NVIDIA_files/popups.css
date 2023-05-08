@@ -1,0 +1,60 @@
+.add_popup {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: red;
+  width: 100%;
+  z-index: 9999;
+  background: rgba(193, 201, 210, .7);
+  /* display: flex; */
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup_inner {
+  width: 100%;
+  max-width: 448px;
+  min-width: 296px;
+  /* min-height: 100%; */
+  max-height: calc(100 vh - 80px);
+  overflow: auto;
+  color: rgba(26, 26, 26, .7);
+  background: #fff;
+  border-radius: 4px !important;
+  box-shadow: 0 7px 14px 0 rgb(60 66 87 / 8%), 0 3px 6px 0 rgb(0 0 0 / 12%);
+}
+
+.pop_section.pop_header, .pop_section.pop_body {
+  box-shadow: inset 0 -1px #e3e8ee;
+}
+
+.pop_section {
+  padding-left: 20px;
+  padding-bottom: 16px;
+  padding-right: 20px;
+  padding-top: 16px;
+}
+
+.popup_title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.pop_section.pop_body {
+    position: relative;
+}
+.pop_section.pop_header, .pop_section.pop_body {
+    box-shadow: inset 0 -1px #e3e8ee;
+}
+
+.pop_footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#subscription_name{
+  color: #022a4d;
+}

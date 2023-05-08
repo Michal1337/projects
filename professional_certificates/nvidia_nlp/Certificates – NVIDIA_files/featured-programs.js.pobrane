@@ -1,0 +1,432 @@
+$ = jQuery;
+let fp_storage = window.localStorage;
+
+const program_order = ['value-based-care', 'full-stack-engineering', 'population-health', 'digital-marketing']
+const program_order2 = ['value-based-care', 'full-stack-engineering', 'population-health', 'digital-marketing']
+
+const fp_pageAccessedByReload = (
+  (window.performance.navigation && window.performance.navigation.type === 1) ||
+  window.performance
+  .getEntriesByType('navigation')
+  .map((nav) => nav.type)
+  .includes('reload')
+);
+
+if (fp_pageAccessedByReload) {
+  fp_storage.clear()
+}
+
+window.onunload = window.onbeforeunload = function(event) {
+  fp_storage.clear()
+};
+
+$(document).ready(function() {
+  if($('.featured-programs.w-slider.ibl').length>0){
+    let fp_storage = window.localStorage;
+    let page = 1;
+    fp_storage.setItem('desktop_page', page);
+    fp_storage.setItem('mobile_page', page);
+    fetch_featured_programs(page);
+  }
+
+});
+
+function render_fp_slider(programs) {
+  // if (programs['results'].length > 0) {
+    render_fp_desktop_slider(programs);
+    // render_fp_mobile_slider(programs);
+  // }
+}
+
+function tablet_slider_animations() {
+  let tablet_sliders = document.querySelectorAll('.tablet_slider');
+  for (var i = 0; i < tablet_sliders.length; i++) {
+    tablet_sliders[i].addEventListener('touchstart', start, false);
+    tablet_sliders[i].addEventListener('touchmove', move, false);
+    tablet_sliders[i].addEventListener('touchend', end, false);
+    tablet_sliders[i].slider_id = tablet_sliders[i].id
+  }
+}
+
+function fp_start(evt) {
+  var touches = evt.touches;
+  if (touches && touches.length > 1) {
+    return;
+  }
+  active = true;
+  if (touches) {
+    useTouch = true;
+    startX = touches[0].clientX;
+  } else {
+    startX = evt.clientX;
+  }
+  lastX = startX;
+}
+
+
+function fp_move(evt) {
+  if (!active) {
+    return;
+  }
+
+  if (useTouch && evt.type === 'mousemove') {
+    evt.preventDefault();
+    evt.stopPropagation();
+    return;
+  }
+
+  var touches = evt.touches;
+  var x = touches ? touches[0].clientX : evt.clientX;
+  var velocityX = x - lastX;
+  lastX = x;
+  let direction = '';
+  if (velocityX > 0) {
+    direction = 'left';
+  } else {
+    direction = 'right';
+  }
+
+  let current_page = fp_storage.getItem('mobile_page')
+  let number_of_pages = Math.ceil(fp_storage.getItem('total_programs'));
+  let disable_movement = false;
+  if (current_page == 1 && direction == 'left') {
+    disable_movement = true;
+  }
+
+  if (current_page == fp_storage.getItem('total_programs') && direction == 'right') {
+    disable_movement = true;
+  }
+
+
+
+  if (!disable_movement) {
+    fp_arrow_click(direction)
+  }
+  fp_cancel();
+}
+
+function fp_end(evt) {
+  if (!active) {
+    return;
+  }
+  active = false;
+
+  if (useTouch && evt.type === 'mouseup') {
+    evt.preventDefault();
+    evt.stopPropagation();
+    useTouch = false;
+    return;
+  }
+}
+
+function fp_cancel() {
+  active = false;
+}
+
+
+function fetch_featured_programs(page) {
+  let number_of_pages = Math.ceil(fp_storage.getItem('total_programs') / 4);
+  if ($('.div-block-54.fc-' + page).length == 0 && (page <= number_of_pages || number_of_pages <= 0)) {
+    const programs_url = FPSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/org-programs//';
+    $.ajax({
+      type: 'get',
+      url: programs_url,
+      success: function(data) {
+        fp_storage.setItem('total_programs', data.length);
+        render_fp_slider(data);
+      },
+      // complete: function(data) {
+      //   setTimeout(() => {
+      //     move_fp_slider();
+      //   }, 20);
+      // }
+    });
+
+  }
+  else {
+    move_fp_slider()
+  }
+  set_fp_mobile_animation();
+
+}
+
+
+function render_fp_desktop_slider(programs) {
+  let current_page = fp_storage.getItem('desktop_page')
+  let mask_desktop = document.querySelector('.featured-programs.desktop.w-slider-mask');
+  let slide_desktop = document.createElement('div');
+  slide_desktop.className = 'w-slide'
+  slide_desktop.innerHTML = `<div class="featured-programs div-block-54 desktop al-l h  fc-` + current_page + `"></div>`;
+  mask_desktop.append(slide_desktop);
+  let desktop_container = document.querySelector('.featured-programs.div-block-54.desktop.al-l.h.fc-' + current_page);
+  // //populate slides
+  let programs_array = [];
+  let data_array =[];
+
+  $(programs).each(function(index) {
+    populate_fp_slide($(this)[0], desktop_container, programs_array, data_array);
+
+  });
+}
+//
+function render_fp_mobile_slider(programs, data) {
+  let mobile_programs_array = [];
+  let mobile_data_array =[];
+  let current_page = fp_storage.getItem('desktop_page')
+  let mask_mobile = document.querySelector('.featured-programs.mobile.w-slider-mask');
+  $(programs).each(function(index) {
+    let slide_mobile = document.createElement('div');
+    slide_mobile.className = 'slide w-slide'
+    slide_mobile.innerHTML = `<div class="featured-programs div-block-54 mobile al-l h  fc-` + current_page + ` i-` + index + `"></div>`;
+    mask_mobile.append(slide_mobile);
+    let mobile_container = document.querySelector('.featured-programs.div-block-54.mobile.al-l.h.fc-' + current_page  + '.i-' + index);
+    // populate_fp_slide($(this)[0], mobile_container, mobile_programs_array, mobile_data_array);
+    render_fp_box(data[index], slide_mobile, $(this)[0]);
+  });
+}
+
+function populate_fp_slide(program, slide, programs_array, data_array) {
+  fetch_fp_metadata(program,slide, programs_array, data_array);
+}
+
+function format_event_date(string_date) {
+  date_time = string_date.split("T")[0];
+  date_time = new Date(date_time);
+  var options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  };
+  return date_time.toLocaleDateString("en-US", options);
+}
+
+function render_fp_slider_arrows(events) {
+  let current_page = fp_storage.getItem('desktop_page')
+  let number_of_pages = Math.ceil(fp_storage.getItem('total_programs') / 4);
+  if (current_page < number_of_pages) {
+    show_fp_right_arrow();
+  }
+  if (current_page == number_of_pages) {
+    hide_fp_right_arrow();
+  }
+
+  if (current_page > 1 && number_of_pages > 1) {
+    show_fp_left_arrow();
+  }
+
+  if (current_page == 1) {
+    hide_fp_left_arrow();
+  }
+
+}
+
+function show_fp_right_arrow() {
+  $('.fc_right_arrow')[0].style.display = 'flex';
+}
+
+function show_fp_left_arrow() {
+  $('.fc_left_arrow')[0].style.display = 'flex';
+}
+
+function hide_fp_right_arrow() {
+  $('.fc_right_arrow')[0].style.display = 'none';
+}
+
+function hide_fp_left_arrow() {
+  $('.fc_left_arrow')[0].style.display = 'none';
+}
+
+function fp_arrow_click(direction) {
+  let current_page = fp_storage.getItem('desktop_page');
+  let mobile_page = fp_storage.getItem('mobile_page');
+
+  if (direction == 'right') {
+    page = +current_page + 1
+    mobile_page = +mobile_page + 1
+  } else {
+    page = +current_page - 1
+    mobile_page = +mobile_page - 1
+  }
+
+  let number_of_pages = Math.ceil(fp_storage.getItem('total_programs') / 4);
+  if (page > number_of_pages) {
+    page = number_of_pages;
+  }
+  if (page < 1) {
+    page = 1;
+  }
+
+  fp_storage.setItem('desktop_page', page);
+  fp_storage.setItem('mobile_page', mobile_page);
+  move_fp_slider();
+}
+
+function move_fp_slider() {
+  //get desktop slides
+  //get mobile slides
+  let current_page = fp_storage.getItem('desktop_page')
+  let mobile_current_page = fp_storage.getItem('mobile_page');
+
+  offset = calculate_fp_offset(current_page);
+  $(".featured-programs.desktop.w-slider-mask .w-slide").each(function() {
+    $(this)[0].style.transition = "transform 500ms ease 0s";
+    $(this)[0].style.transform = "translateX(" + offset + "%)";
+  });
+  mobile_offset = calculate_fp_offset(mobile_current_page);
+  $(".featured-programs.mobile.w-slider-mask .w-slide").each(function() {
+    $(this)[0].style.transition = "transform 500ms ease 0s";
+    $(this)[0].style.transform = "translateX(" + mobile_offset + "%)";
+  });
+  render_fp_slider_arrows();
+}
+
+function calculate_fp_offset(page) {
+  if (page == 1) {
+    offset = 0
+  } else {
+    offset = -(page - 1) * 100
+  }
+  return offset;
+}
+
+function set_fp_mobile_animation() {
+  let mobile_slider = document.querySelector('.featured-programs.mobile.w-slider-mask');
+  mobile_slider.addEventListener('touchstart', fp_start, false);
+  mobile_slider.addEventListener('touchmove', fp_move, false);
+  mobile_slider.addEventListener('touchend', fp_end, false);
+}
+
+function fetch_fp_metadata(program, slide, programs_array, data_array){
+  const programs_metadata_url = FPSettings.home_url + "/" + 'wp-json/ibl-wp-pages-plugin/v1/program-meta/';
+
+
+  let data = {
+    'program_slug': program['item_id'],
+  };
+  $.ajax({
+    type: 'get',
+    url: programs_metadata_url,
+    data: data,
+    success: function(data) {
+      programs_array.push(program);
+      if(data.length ==0){
+        data = toObject(data);
+        data['item_slug']= program['slug'];
+        data_array.push(data);
+      }
+      else{
+        data_array.push(data);
+      }
+    },
+    complete: function (data){
+
+      if (programs_array.length == 4){
+        ordered_program_array = mapOrder(programs_array, program_order, 'slug');
+        ordered_data_array = mapOrder(data_array, program_order, 'item_slug');
+
+        //desktop
+        $(ordered_program_array).each(function(index) {
+          render_fp_box(ordered_data_array[index], slide, $(this)[0]);
+        });
+
+
+        //mobile
+        render_fp_mobile_slider(ordered_program_array,ordered_data_array)
+
+      }
+    }
+  });
+}
+
+function render_fp_box(data,slide, program){
+  let about_page_link = FPSettings.home_url + "/programs/"+program['slug'];
+  let coming_soon_banner='';
+  if( program['slug'] == 'population-health' || program['slug'] == 'digital-marketing' || program['slug'] == 'full-stack-engineering'){
+    about_page_link = '#'
+    coming_soon_banner = render_coming_soon();
+  }
+  let banner_image = FPSettings.lms_url +data['card_image'];
+  let program_price = format_program_price(data['display_price']);
+  let duration = format_program_duration(data['duration']);
+  let course_box = document.createElement('div');
+  course_box.className = 'course-rec-3 filterdiv0 pr f';
+  course_box.innerHTML =`<a href="`+about_page_link+`" class="course_link w-inline-block" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">
+                      <div class="course-header-rec-3">
+                        <div class="overlay">
+                          <div class="div-block-45"></div>
+                        </div>
+                        <img src="`+banner_image+`" height="30" alt="" class="image-34 `+program['item_id']+`">
+                      </div>
+                      <div class="course-body-3">
+                                        <div class="name_title">
+                                          <div class="text-block-39">`+program['name']+`</div>
+                                        </div>
+                                        <div class="line4 n"></div>
+                                        <div class="text-block-35 description-block-35"></div>
+
+                                        <div class="course-features">
+                                        <div class="cms_holder">
+                                        `+coming_soon_banner+`
+                                        </div>
+                                          <div class="div-block-30 first_row">
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="`+ FPSettings.theme_uri + "/"+`inc/images/dol_p.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">`+program_price+`</div>
+                                              </div>
+                                            </div>
+                                            <div class="div-block-31">
+                                              <div class="faq-wrap-3"><img src="`+ FPSettings.theme_uri + "/"+`inc/images/clock_icon_p.png" alt="" class="img-trg"></div>
+                                              <div class="features_block">
+                                                <div class="features-title-3">`+duration+`</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                    </a>`;
+  slide.append(course_box);
+}
+
+function format_program_price(price){
+  if (isNaN(price)){
+    return price
+  }else{
+    return '$'+price;
+  }
+}
+
+
+  function format_program_duration(duration){
+    if (!duration){
+      return 'Est. Time'
+    }else{
+      return duration;
+    }
+  }
+
+  function render_coming_soon(){
+    return '<div class="cms">COMING SOON</div>'
+  }
+
+
+  function mapOrder (array, order, key) {
+    array.sort( function (a, b) {
+      var A = a[key], B = b[key];
+      if (order.indexOf(A) > order.indexOf(B)) {
+        return 1;
+      }
+      else if (order.indexOf(A) < order.indexOf(B)){
+      return -1;
+      }
+    });
+    return array;
+};
+
+
+function toObject(arr) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    rv[i] = arr[i];
+  return rv;
+}

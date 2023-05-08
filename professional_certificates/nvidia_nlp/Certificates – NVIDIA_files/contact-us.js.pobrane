@@ -1,0 +1,39 @@
+function validateEmail(email) {
+    var errorMsg = null;
+    var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    var isValid = emailRegex.test(email.trim());
+    if (isValid == false) {
+        errorMsg = 'Email provided is invalid.';
+    }
+    return errorMsg;
+}
+
+
+function submitContactUsForm() {
+    console.log('submitContactUsForm..................');
+    var inputs = document.querySelectorAll('input[form-type="contact-us"]');
+    var isValidForm = true;
+    for (var input of inputs) {
+        var inputValue = input.value;
+        var inputName = input.getAttribute('name');
+        var isValidInput = true;
+        if (!inputValue) {
+            isValidForm = false;
+            isValidInput = false;
+        } else {
+            if (inputName == 'email') {
+                console.log('errorMsg.............')
+                var errorMsg = validateEmail(inputValue);
+                console.log(errorMsg)
+                if (errorMsg) {
+                    isValidForm = false
+                    isValidInput = false
+                }
+            }
+        }
+        input.style.borderColor = isValidInput === true ? '' : 'red';
+    }
+    if (isValidForm === true) {
+        document.querySelector('#wf-form-Contact-Form').submit();
+    }
+}

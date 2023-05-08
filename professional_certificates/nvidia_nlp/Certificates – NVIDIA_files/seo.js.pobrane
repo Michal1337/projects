@@ -1,0 +1,5 @@
+function add_seo_tags(data){
+  document.getElementsByTagName('meta')["description"].content = data.description;
+  document.getElementsByTagName('meta')["keywords"].content = data.keywords;
+
+}
