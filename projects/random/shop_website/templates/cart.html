@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/style_cart.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div class="center-div">
+
+<h1>Cart</h1>
+
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Total price</th>
+            <th>Date</th>
+        </tr>
+        {% for order in list_of_orders %}
+            <tr>
+                <td>
+                    {% if order.product.image %}
+                    <img src="/../{{ order.product.image }}" alt="{{ order.product.name }}">
+                    {% else %}
+                    <img src="{% static "images/no-image-available-icon-6.png" %}" alt="{{ order.product.name }}">
+                    {% endif %}
+                </td>
+                <td><a href="http://127.0.0.1:8000/shop/product/{{ order.product.id }}">{{ order.product.name }}</a></td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>Total price: {{ sum_totalprice }}</h3>
+</div>
+
+</body>
+</html>

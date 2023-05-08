@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/style_register.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div class="center-div">
+<h1>Logout</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Are u sure you want to logout?</p>
+    <input type="submit" value="Yes, logout">
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% load static %}
+    <script src={% static "scripts/login_validation.js" %}></script>
+    <link rel="stylesheet" href="{% static "styles/style_login.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div class="center-div">
+
+    {% if request.user.is_authenticated %}
+
+                <p>You are already logged in. Go to <a href="http://127.0.0.1:8000/shop/home/">Main Page</a></p>
+
+         {% else %}
+
+    <h1>Login</h1>
+      <form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td><input type="text" id="username" name="username" required placeholder="Username"></td>
+            <td id="Nickerr"></td>
+        </tr>
+        <tr>
+            <td><input type="password" id="password" name="password" required placeholder="Password"></td>
+            <td id="Passerr"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Login" disabled id="login"></td>
+        </tr>
+    </table>
+</form>
+
+<a href="http://127.0.0.1:8000/shop/password_reset/">Forgot Password?</a>
+
+
+    {% endif %}
+
+</div>
+
+
+
+
+</body>
+</html>

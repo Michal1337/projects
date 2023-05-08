@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/style_home.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+
+<div id="content">
+    <div class="product-grid">
+        {% for product in list_of_products %}
+            <div class="product-card">
+                {% if product.image %}
+                    <img src="../../{{ product.image }}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{% static "images/no-image-available-icon-6.png" %}" alt="{{ product.name }}">
+                {% endif %}
+                <h3><a href="http://127.0.0.1:8000/shop/product/{{ product.id }}">{{ product.name }}</a></h3>
+                <div class="price">{{ product.price }}</div>
+                <div class="type">{{ product.get_type }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

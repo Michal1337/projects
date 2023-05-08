@@ -1,0 +1,45 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: gray;
+    overflow-y: auto;
+}
+
+
+.center-div {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: darkgray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 50%;
+    height: max-content;
+}
+
+h1{
+    text-align: center;
+}
+.center-div h3{
+    text-align: right;
+    margin: 20px;
+}
+
+img {
+    width: auto;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}

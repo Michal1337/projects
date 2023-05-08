@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/style_nav.css" %}">
+</head>
+<body>
+
+{% if request.user.is_authenticated %}
+
+    <ul>
+        <li><a href="http://127.0.0.1:8000/shop/home/">Home</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/user/{{ request.user.username }}/">Profile</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/user/{{ request.user.username }}/cart/">Cart</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/user/{{ request.user.username }}/addProduct/">Add product</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/search/">Products</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/logout/">Logout</a></li>
+    </ul>
+
+{% else %}
+    <ul>
+        <li><a href="http://127.0.0.1:8000/shop/home/">Home</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/search/">Products</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/login/">Login</a></li>
+        <li><a href="http://127.0.0.1:8000/shop/register/">Register</a></li>
+    </ul>
+
+{% endif %}
+
+
+</body>
+</html>

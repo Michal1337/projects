@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop - user</title>
+    {% load static %}
+    <script src={% static "scripts/comment_validation.js" %}></script>
+    <link rel="stylesheet" href="{% static "styles/style_user.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div id="row">
+
+    <div class="column">
+        <h1>About me</h1>
+        <h2>{{ user.username }}</h2>
+        <table>
+            <tr>
+                <td>First name</td>
+                <td>{{ user.first_name }}</td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>Date joined</td>
+                <td>{{ user.date_joined }}</td>
+            </tr>
+        </table>
+
+        {% if list_of_products|length > 0 %}
+        <h2>My Products</h2>
+
+        <div class="product-grid">
+        {% for product in list_of_products %}
+            <div class="product-card">
+                {% if product.image %}
+                    <img src="../../../{{ product.image }}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="../../../static/images/no-image-available-icon-6.png" alt="{{ product.name }}">
+                {% endif %}
+                <h3><a href="http://127.0.0.1:8000/shop/product/{{ product.id }}">{{ product.name }}</a></h3>
+                <div class="price">{{ product.price }}</div>
+                <div class="type">{{ product.get_type }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    </div>
+    <div class="column">
+
+        {% if request.user.is_authenticated and request.user != user%}
+        <h2>Add your comment</h2>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {% for field in form %}
+                    <tr>
+                        <td>{{ field.label }}</td>
+                        <td>{{ field }}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <td>
+                        <input type="submit" id="addcom" disabled value="Comment">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table>
+            {% for field in form %}
+                <tr>
+                    <td id="{{ field.label }}" style="background-color: white"></td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if list_of_comments|length > 0 %}
+        <h2>Comments about me</h2>
+            <table>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+                {% for comment in list_of_comments %}
+                    <tr>
+                        <td><a href="http://127.0.0.1:8000/shop/user/{{ comment.author }}">{{ comment.author }}</a></td>
+                        <td>{{ comment.title }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.get_rating }}</td>
+                        <td>{{ comment.pub_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+    {% endif %}
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

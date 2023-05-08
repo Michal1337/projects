@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop - product</title>
+    {% load static %}
+    <script src={% static "scripts/product_validation.js" %}></script>
+    <link rel="stylesheet" href="{% static "styles/style_product.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div id="row">
+    <h1 style="margin: 20px">{{ product.name }}</h1>
+    <div class="column">
+        {% if product.image %}
+            <img src="../../../{{ product.image }}" alt="{{ product.name }}">
+        {% else %}
+            <img src="{% static "images/no-image-available-icon-6.png" %}" alt="{{ product.name }}">
+        {% endif %}
+
+        <table>
+            <tr>
+                <td>Type</td>
+                <td>{{ product.get_type }}</td>
+            </tr>
+            <tr>
+                <td>Owner</td>
+                <td>
+                    <a href="http://127.0.0.1:8000/shop/user/{{ product.user }}">{{ product.user }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td id="price">{{ product.price }}</td>
+            </tr>
+            <tr>
+                <td>Weight</td>
+                <td>{{ product.weight }}</td>
+            </tr>
+            <tr>
+                <td>Condition</td>
+                <td>{{ product.get_condition }}</td>
+            </tr>
+            <tr>
+                <td>Available Number</td>
+                <td>{{ product.available_num }}</td>
+            </tr>
+            <tr>
+                <td>Available From</td>
+                <td>{{ product.available_from }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="column">
+        {% if request.user.is_authenticated %}
+
+            <h1>Order</h1>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {% for field in formOrder %}
+                        <tr>
+                            <td>{{ field.label }}</td>
+                            <td>{{ field }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <input type="submit" name="addToOrder" id="addtoorder" disabled value="Add to cart">
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    {% for field in formOrder %}
+                        <tr style="background-color: white">
+                            <td id="{{ field.label }}"></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+
+
+
+            <h1>Add your review</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {% for field in formReview %}
+                        <tr>
+                            <td>{{ field.label }}</td>
+                            <td>{{ field }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <input type="submit" id="addrev" name="addReview" disabled value="Add review">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <table>
+                {% for field in formReview %}
+                    <tr style="background-color: white">
+                        <td id="{{ field.label }}"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+
+
+        {% endif %}
+
+
+
+        {% if list_of_reviews|length > 0 %}
+            <h1>Reviews</h1>
+
+            <table>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+                {% for review in list_of_reviews %}
+                    <tr>
+                        <td><a href="http://127.0.0.1:8000/shop/user/{{ review.author }}">{{ review.author }}</a></td>
+                        <td>{{ review.title }}</td>
+                        <td>{{ review.content }}</td>
+                        <td>{{ review.get_rating }}</td>
+                        <td>{{ review.pub_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

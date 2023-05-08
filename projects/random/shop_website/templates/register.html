@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    {% load static %}
+    <script src={% static "scripts/register_validation.js" %}></script>
+    <link rel="stylesheet" href="{% static "styles/style_register.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+
+<div class="center-div">
+
+{% if request.user.is_authenticated %}
+
+<p>You are already logged in. Go to <a href="http://127.0.0.1:8000/shop/home/">Main Page</a></p>
+
+{% else %}
+
+
+<h1>Register</h1>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <table>
+        {% for field in form %}
+            <tr>
+                <td>{{ field.label }}</td>
+                <td>{{ field }}</td>
+                <td id="{{ field.label }}"></td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td>
+                <input type="submit" id="register" disabled value="Register">
+            </td>
+        </tr>
+    </table>
+</form>
+
+    <p>Alread have an account? <a href="http://127.0.0.1:8000/shop/login/">Login here</a></p>
+
+{% endif %}
+
+</div>
+
+
+</body>
+</html>

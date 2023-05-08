@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    {% load static %}
+    <script src={% static "scripts/search_validation.js" %}></script>
+    <link rel="stylesheet" href="{% static "styles/style_search.css" %}">
+</head>
+<body>
+
+<div id="nav">
+    {% include "navigation.html" with request=request %}
+</div>
+
+<div class="center-div">
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <table>
+        {% for field in form %}
+            <tr>
+                <td>{{ field.label }}</td>
+                <td>{{ field }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>
+                <input type="submit" id="search" disabled value="Search">
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table>
+    {% for field in form %}
+        <tr>
+            <td id="{{ field.label }}"></td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% if list_of_products|length > 0 %}
+<table>
+    <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Number available</th>
+    </tr>
+    {% for product in list_of_products %}
+        <tr>
+            <td>
+                    {% if order.product.image %}
+                    <img src="/../{{ order.product.image }}" alt="{{ order.product.name }}">
+                    {% else %}
+                    <img src="{% static "images/no-image-available-icon-6.png" %}" alt="{{ order.product.name }}">
+                    {% endif %}
+            </td>
+            <td><a href="http://127.0.0.1:8000/shop/product/{{ product.id }}">{{ product.name }}</a></td>
+            <td> {{ product.price }}</td>
+            <td>{{ product.get_type }}</td>
+            <td>{{ product.available_num }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</div>
+
+
+</body>
+</html>
