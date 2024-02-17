@@ -1,5 +1,7 @@
 # Table of contents
 
+* ##### Seismic activity prediction with neural networks
+The aim of this work is to try to predict the earthquakes using machine learning methods. The emphasis has been put on the use of recurrent neural networks and transformer-based models. The effectiveness of the method has been verified and gives promising results for the future research. Results have been presented as a simple, practical application. Tech: Python - Tensorflow, Numpy, Pandas, Matplotlib, Django (May '23)
 * ##### Natural Language Processing
   1. Neural Network Translation - In this project, I implemented a Spanish-English translator using an encoder-decoder architecture with cross-attention. The model was trained on a large dataset of parallel sentences to generate accurate translations. By leveraging cross-attention, the model could focus on relevant information while decoding, resulting in relatively high-quality translations from Spanish to English. Tech: Python - Tensorflow, Tensorflow_text, Numpy, pathlib (May '23)
   2. Classification COVID - In this project, COVID tweets are preprocessed using regular expressions, tokenization, and padding. Word embeddings are then implemented to capture semantic meaning, and bidirectional RNNs like GRU and LSTM are utilized for sentiment classification. This approach enables the model to effectively analyze and categorize the sentiment expressed in the COVID-related tweets. Tech: Python - Tensorflow, Pandas, Numpy, Matplotlib, re, nltk (April '23)
