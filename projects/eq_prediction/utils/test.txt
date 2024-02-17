@@ -1,0 +1,13 @@
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|X|X|} \hline
+        \textbf{time} & \textbf{longitude} & \textbf{latitude} & \textbf{depth} & \textbf{mag} & \textbf{magType} & \textbf{longitude_disc} & \textbf{latitude_disc} & \textbf{pos} \\ \hline
+        1951 & -80.99 & 7.33 & 54.40 & 6.59 & mw & -81.00 & 7.00 & 7_-81 \\ \hline
+        1951 & -115.73 & 32.57 & 6.00 & 3.29 & ml & -116.00 & 32.00 & 32_-116 \\ \hline
+        1951 & -115.44 & 33.00 & 6.00 & 3.03 & ml & -116.00 & 32.00 & 32_-116 \\ \hline
+        1951 & -80.83 & 7.33 & 15.00 & 5.91 & mw & -81.00 & 7.00 & 7_-81 \\ \hline
+        1951 & -116.19 & 33.21 & 6.00 & 2.77 & ml & -117.00 & 33.00 & 33_-117 \\ \hline
+    \end{tabularx}
+    \caption{caption}
+    \label{label}
+\end{table}
