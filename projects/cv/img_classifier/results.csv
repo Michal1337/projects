@@ -1,0 +1,79 @@
+model;n_params;loss;acc;info;path
+CNN;653386;1.135088562965393;0.6148444414138794;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn1.keras
+CNN;653386;1.1149600744247437;0.6213777661323547;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn2.keras
+CNN;653386;1.0352009534835815;0.6413221955299377;{'Data Augmentation': 'No', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn3.keras
+CNN;653386;1.425990343093872;0.5720555782318115;{'Data Augmentation': 'No', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn4.keras
+CNN;653386;1.4350202083587646;0.5671555399894714;{'Data Augmentation': 'No', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn5.keras
+CNN;653386;1.0233269929885864;0.6427333354949951;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn6.keras
+CNN;653386;1.4474912881851196;0.4909333288669586;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn7.keras
+CNN;653386;1.5722006559371948;0.481677770614624;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn8.keras
+CNN;653386;1.4400715827941895;0.4882444441318512;{'Data Augmentation': 'Type 1', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn9.keras
+CNN;653386;1.6694637537002563;0.4537777900695801;{'Data Augmentation': 'Type 1', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn10.keras
+CNN;653386;1.7883648872375488;0.4049888849258423;{'Data Augmentation': 'Type 1', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn11.keras
+CNN;653386;1.4170453548431396;0.5094444155693054;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn12.keras
+CNN;653386;1.1282362937927246;0.6046555638313293;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn13.keras
+CNN;653386;1.1674840450286865;0.594955563545227;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn14.keras
+CNN;653386;1.1103984117507935;0.6137111186981201;{'Data Augmentation': 'Type 2', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn15.keras
+CNN;653386;1.4520646333694458;0.5403666496276855;{'Data Augmentation': 'Type 2', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn16.keras
+CNN;653386;1.4925700426101685;0.5199777483940125;{'Data Augmentation': 'Type 2', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn17.keras
+CNN;653386;1.1009008884429932;0.6174555420875549;{'Data Augmentation': 'Type 2', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn18.keras
+MobileNet;1089402;0.5709962844848633;0.7973777651786804;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet1_pretrained.weights.h5
+MobileNet;1089402;0.4600207507610321;0.8396555781364441;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet1_finetuned.weights.h5
+MobileNet;1089402;0.5707494616508484;0.7981111407279968;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet2_pretrained.weights.h5
+MobileNet;1089402;0.4742761552333832;0.8417888879776001;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet2_finetuned.weights.h5
+MobileNet;1089402;0.5741896629333496;0.796500027179718;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet3_pretrained.weights.h5
+MobileNet;1089402;0.46293365955352783;0.8389333486557007;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet3_finetuned.weights.h5
+MobileNet;1089402;0.7394607663154602;0.7429666519165039;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet4_pretrained.weights.h5
+MobileNet;1089402;0.6181395649909973;0.7844333052635193;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet4_finetuned.weights.h5
+MobileNet;1089402;0.7345266938209534;0.7446110844612122;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet5_pretrained.weights.h5
+MobileNet;1089402;0.6230841279029846;0.7869889140129089;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet5_finetuned.weights.h5
+MobileNet;1089402;0.7377992868423462;0.7409777641296387;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet6_pretrained.weights.h5
+MobileNet;1089402;0.6199911236763;0.7845777869224548;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet6_finetuned.weights.h5
+MobileNet;1089402;0.6164624691009521;0.7913110852241516;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet7_pretrained.weights.h5
+MobileNet;1089402;0.49805620312690735;0.8327666521072388;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet7_finetuned.weights.h5
+MobileNet;1089402;0.6078565716743469;0.7949666380882263;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet8_pretrained.weights.h5
+MobileNet;1089402;0.5021501183509827;0.8323888778686523;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 5e-05, 'Batch Size': 32};mobilenet8_finetuned.weights.h5
+MobileNet;1089402;0.6167646646499634;0.7914333343505859;{'Data Augmentation': 'Type 2', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet9_pretrained.weights.h5
+MobileNet;1089402;0.4992614686489105;0.832622230052948;{'Data Augmentation': 'Type 2', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};mobilenet9_finetuned.weights.h5
+ViT;87654666;0.32894057035446167;0.8852888941764832;{'Data Augmentation': 'No', 'Regularization': 'Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT1_pretrained.keras
+ViT;87654666;0.275829553604126;0.9061999917030334;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT1_finetuned.keras
+ViT;87654666;0.40859389305114746;0.8605444431304932;{'Data Augmentation': 'Type 1', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT2_pretrained.keras
+ViT;87654666;0.34198737144470215;0.8825555443763733;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT2_finetuned.keras
+ViT;87654666;0.3584784269332886;0.8826444149017334;{'Data Augmentation': 'Type 2', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT3_pretrained.keras
+ViT;87654666;0.2882540535926819;0.902133303642273;{'Data Augmentation': 'Type 2', 'Regularization': 'Dropout', 'Optimizer': 'Adam + RMSprop', 'Learning Rate': 0.0001, 'Batch Size': 256};ViT3_finetuned.keras
+CNN;653386;1.0885426998138428;0.6086221933364868;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn1.keras
+CNN;653386;1.0814785957336426;0.6251111030578613;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn2.keras
+CNN;653386;1.0660284757614136;0.6394666433334351;{'Data Augmentation': 'No', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn3.keras
+CNN;653386;1.4516924619674683;0.5561444163322449;{'Data Augmentation': 'No', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn4.keras
+CNN;653386;1.4400769472122192;0.5700555443763733;{'Data Augmentation': 'No', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn5.keras
+CNN;653386;1.0332539081573486;0.63673335313797;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn6.keras
+CNN;653386;1.4918084144592285;0.4756777882575989;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn7.keras
+CNN;653386;1.5265541076660156;0.4791888892650604;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn8.keras
+CNN;653386;1.6707992553710938;0.4970555603504181;{'Data Augmentation': 'Type 1', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn9.keras
+CNN;653386;1.707553505897522;0.43941110372543335;{'Data Augmentation': 'Type 1', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn10.keras
+CNN;653386;1.734459400177002;0.4306444525718689;{'Data Augmentation': 'Type 1', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn11.keras
+CNN;653386;1.5222938060760498;0.508055567741394;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn12.keras
+CNN;653386;1.1580417156219482;0.5991111397743225;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn13.keras
+CNN;653386;1.2251242399215698;0.5817444324493408;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn14.keras
+CNN;653386;1.1217702627182007;0.6184777617454529;{'Data Augmentation': 'Type 2', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn15.keras
+CNN;653386;1.544389009475708;0.5069222450256348;{'Data Augmentation': 'Type 2', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn16.keras
+CNN;653386;1.4692803621292114;0.5386222004890442;{'Data Augmentation': 'Type 2', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn17.keras
+CNN;653386;1.1241692304611206;0.6108444333076477;{'Data Augmentation': 'Type 2', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn18.keras
+CNN;653386;1.0691183805465698;0.621399998664856;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn1.keras
+CNN;653386;1.0918083190917969;0.6250777840614319;{'Data Augmentation': 'No', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn2.keras
+CNN;653386;1.0364018678665161;0.642122209072113;{'Data Augmentation': 'No', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn3.keras
+CNN;653386;1.5438525676727295;0.5153444409370422;{'Data Augmentation': 'No', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn4.keras
+CNN;653386;1.3947727680206299;0.5880110859870911;{'Data Augmentation': 'No', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn5.keras
+CNN;653386;1.0424981117248535;0.6401333212852478;{'Data Augmentation': 'No', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn6.keras
+CNN;653386;1.5667582750320435;0.47431111335754395;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn7.keras
+CNN;653386;1.5762156248092651;0.46843332052230835;{'Data Augmentation': 'Type 1', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn8.keras
+CNN;653386;1.5379196405410767;0.4965444505214691;{'Data Augmentation': 'Type 1', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn9.keras
+CNN;653386;1.6885968446731567;0.45082223415374756;{'Data Augmentation': 'Type 1', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn10.keras
+CNN;653386;1.7826008796691895;0.4053777754306793;{'Data Augmentation': 'Type 1', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn11.keras
+CNN;653386;1.5343040227890015;0.5034999847412109;{'Data Augmentation': 'Type 1', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn12.keras
+CNN;653386;1.176967740058899;0.6014888882637024;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn13.keras
+CNN;653386;1.1511996984481812;0.5988444685935974;{'Data Augmentation': 'Type 2', 'Regularization': 'No', 'Optimizer': 'Adam', 'Learning Rate': 0.0001, 'Batch Size': 32};cnn14.keras
+CNN;653386;1.1274584531784058;0.6062777638435364;{'Data Augmentation': 'Type 2', 'Regularization': 'Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn15.keras
+CNN;653386;1.4858218431472778;0.5203777551651001;{'Data Augmentation': 'Type 2', 'Regularization': 'L2', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn16.keras
+CNN;653386;1.5155091285705566;0.511388897895813;{'Data Augmentation': 'Type 2', 'Regularization': 'L2 + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn17.keras
+CNN;653386;1.0992646217346191;0.6143110990524292;{'Data Augmentation': 'Type 2', 'Regularization': 'Gradient Clipping + Dropout', 'Optimizer': 'Adam', 'Learning Rate': 0.001, 'Batch Size': 256};cnn18.keras
