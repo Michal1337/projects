@@ -1,0 +1,35 @@
+Deep Learning Project 2 - Michał Gromadzki, Lukas Joisten
+
+DATASET
+
+30 classes, 64 721 samples
+
+Train-val-test split bases on the provided validation_list.txt and testing_list.txt files
+
+Make sure each waveforms is 1 second long, pad shorter ones with zeros to 16000 length
+
+Transform waveforms into spectrograms, maybe test some parameters
+
+base params: frame_length=255, frame_step=128
+
+MODELS
+
+ConvNet - Conv2D + MaxPooling2D
+
+Transformer - squeeze the last dimension to get 3D tensors
+
+Whisper (fine-tuning):
+
+- tiny - 39M params
+
+- base - 74M params
+
+- small - 244M params (maybe)
+
+Test different parameters for ConvNet (number of  filters, kernel size, stride) and Transformer(n_emebd, n_head, n_layers)
+
+Accuracy and loss to measure performance 
+
+DATA AUGMENTATION (?)
+
+Augment some samples with background noise provided in _background_noise_ folder

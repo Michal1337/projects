@@ -1,0 +1,4 @@
+Data Loading - Lukas
+Conv2D - Lukas
+Transformers - Michał
+Whisper - Michał
